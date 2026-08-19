@@ -1,0 +1,2002 @@
+     1→# LIQUIDTHESIS — MASTER IMPLEMENTATION PROMPT
+     2→
+     3→Quero que atues como **Lead Product Designer + Senior Full-Stack Engineer + E-commerce Architect** e construas a primeira versão funcional e deployável do website oficial da:
+     4→
+     5→**LIQUIDTHESIS, UNIPESSOAL LDA**
+     6→
+     7→O resultado deve ser um projeto real, funcional, profissional e production-ready ao nível de frontend e infraestrutura, mesmo que nesta primeira fase o catálogo e vários dados operacionais utilizem MOCK DATA.
+     8→
+     9→Não quero apenas uma landing page.
+    10→
+    11→Quero construir a base real de um **e-commerce premium B2C + plataforma B2B Trade**, focado inicialmente em:
+    12→
+    13→* azeites portugueses;
+    14→* vinhos portugueses;
+    15→* produtos gourmet;
+    16→* boxes e presentes;
+    17→* corporate gifting;
+    18→* fornecimento profissional;
+    19→* exportação;
+    20→* private label;
+    21→* produtores parceiros.
+    22→
+    23→A referência visual principal é a imagem/maquete que acompanha este pedido.
+    24→
+    25→Reproduz a linguagem visual, hierarquia, proporções, organização e atmosfera premium da maquete, melhorando onde tecnicamente necessário.
+    26→
+    27→---
+    28→
+    29→# 1. OBJETIVO
+    30→
+    31→Construir:
+    32→
+    33→**LIQUIDTHESIS**
+    34→
+    35→Posicionamento:
+    36→
+    37→> Portuguese Wine, Olive Oil & Fine Foods
+    38→
+    39→Com duas experiências comerciais dentro da mesma plataforma:
+    40→
+    41→### B2C
+    42→
+    43→**Para Si / Loja**
+    44→
+    45→Destinado a consumidores finais.
+    46→
+    47→### B2B
+    48→
+    49→**LiquidThesis Trade / Para Profissionais**
+    50→
+    51→Destinado a:
+    52→
+    53→* restaurantes;
+    54→* hotéis;
+    55→* garrafeiras;
+    56→* lojas gourmet;
+    57→* supermercados independentes;
+    58→* distribuidores;
+    59→* importadores;
+    60→* catering;
+    61→* empresas;
+    62→* corporate gifting.
+    63→
+    64→A arquitetura deve permitir posteriormente ligar Supabase/PostgreSQL ou outra DB sem ser necessário reconstruir o frontend.
+    65→
+    66→---
+    67→
+    68→# 2. STACK
+    69→
+    70→Utilizar:
+    71→
+    72→* Next.js latest stable
+    73→* App Router
+    74→* TypeScript
+    75→* React
+    76→* Tailwind CSS
+    77→* shadcn/ui quando fizer sentido
+    78→* Lucide Icons
+    79→* Stripe Node SDK
+    80→* Stripe Checkout Sessions
+    81→* Server Components por defeito
+    82→* Client Components apenas quando necessário
+    83→* Route Handlers para API
+    84→* Vercel-ready
+    85→* ESLint
+    86→* código rigorosamente tipado
+    87→
+    88→Package manager:
+    89→
+    90→`npm`
+    91→
+    92→O projeto deve executar corretamente com:
+    93→
+    94→```bash
+    95→npm install
+    96→npm run dev
+    97→npm run build
+    98→```
+    99→
+   100→O comando:
+   101→
+   102→```bash
+   103→npm run build
+   104→```
+   105→
+   106→TEM DE terminar sem erros TypeScript, ESLint ou build.
+   107→
+   108→---
+   109→
+   110→# 3. NÃO IMPLEMENTAR DB AINDA
+   111→
+   112→Nesta fase NÃO utilizar:
+   113→
+   114→* Supabase;
+   115→* PostgreSQL;
+   116→* Prisma;
+   117→* Firebase;
+   118→* MongoDB;
+   119→* CMS externo.
+   120→
+   121→Criar uma camada MOCK limpa e substituível.
+   122→
+   123→Exemplo:
+   124→
+   125→```text
+   126→src/
+   127→  data/
+   128→    products.ts
+   129→    categories.ts
+   130→    collections.ts
+   131→    b2b.ts
+   132→    club.ts
+   133→    company.ts
+   134→```
+   135→
+   136→Separar os dados da apresentação.
+   137→
+   138→Não colocar produtos diretamente dentro dos componentes React.
+   139→
+   140→Criar types/interfaces adequadas.
+   141→
+   142→Exemplo:
+   143→
+   144→```ts
+   145→type Product = {
+   146→  id: string
+   147→  sku: string
+   148→  slug: string
+   149→  name: string
+   150→  category: ProductCategory
+   151→  description: string
+   152→  shortDescription: string
+   153→  price: number
+   154→  currency: "EUR"
+   155→  unitLabel?: string
+   156→  unitPrice?: number
+   157→  volume?: string
+   158→  origin?: string
+   159→  region?: string
+   160→  images: string[]
+   161→  featured: boolean
+   162→  alcohol: boolean
+   163→  ageRestricted: boolean
+   164→  stockStatus: "in_stock" | "low_stock" | "out_of_stock"
+   165→  b2b?: B2BPricing
+   166→}
+   167→```
+   168→
+   169→---
+   170→
+   171→# 4. DESIGN SYSTEM
+   172→
+   173→O visual deve transmitir:
+   174→
+   175→* Portugal premium;
+   176→* tradição sem parecer antiquado;
+   177→* produto artesanal;
+   178→* confiança;
+   179→* gastronomia;
+   180→* vinho;
+   181→* azeite;
+   182→* exportação;
+   183→* sofisticação.
+   184→
+   185→## Cores
+   186→
+   187→Base:
+   188→
+   189→Deep Olive:
+   190→`#182515`
+   191→
+   192→Olive Secondary:
+   193→`#273820`
+   194→
+   195→Wine Burgundy:
+   196→`#5A1F27`
+   197→
+   198→Dark Burgundy:
+   199→`#42161D`
+   200→
+   201→Warm Cream:
+   202→`#F7F2E8`
+   203→
+   204→Soft Ivory:
+   205→`#FCFAF5`
+   206→
+   207→Gold:
+   208→`#B99042`
+   209→
+   210→Dark Text:
+   211→`#1E211C`
+   212→
+   213→Muted:
+   214→`#74766F`
+   215→
+   216→Não utilizar gradientes artificiais excessivos.
+   217→
+   218→O gold deve ser sofisticado e discreto.
+   219→
+   220→---
+   221→
+   222→# 5. TIPOGRAFIA
+   223→
+   224→Headings:
+   225→
+   226→usar uma serif editorial premium semelhante a:
+   227→
+   228→* Cormorant Garamond;
+   229→* Playfair Display;
+   230→* Libre Baskerville.
+   231→
+   232→UI/body:
+   233→
+   234→usar:
+   235→
+   236→* Inter;
+   237→* Manrope;
+   238→* ou Geist.
+   239→
+   240→Criar forte contraste editorial entre títulos e UI.
+   241→
+   242→---
+   243→
+   244→# 6. HEADER
+   245→
+   246→Criar duas barras.
+   247→
+   248→## Utility bar
+   249→
+   250→Fundo verde escuro.
+   251→
+   252→Esquerda:
+   253→
+   254→`Envios para Portugal | Entregas rápidas e seguras`
+   255→
+   256→Preparar estrutura futura para:
+   257→
+   258→`Portugal / EUR / PT`
+   259→
+   260→Direita:
+   261→
+   262→`Entrar`
+   263→
+   264→Botão:
+   265→
+   266→`Área Profissional`
+   267→
+   268→---
+   269→
+   270→## Main Header
+   271→
+   272→Logo textual premium:
+   273→
+   274→**LIQUIDTHESIS**
+   275→
+   276→Menu:
+   277→
+   278→* Loja
+   279→* Azeites
+   280→* Vinhos
+   281→* Gourmet
+   282→* Boxes
+   283→* Trade
+   284→* Produtores
+   285→* Clube
+   286→* Sobre
+   287→* Contacto
+   288→
+   289→Ícones:
+   290→
+   291→* search
+   292→* account
+   293→* cart
+   294→
+   295→Carrinho com badge dinâmico.
+   296→
+   297→Header sticky elegante no scroll.
+   298→
+   299→---
+   300→
+   301→# 7. HOMEPAGE
+   302→
+   303→A homepage deve seguir muito de perto a maquete fornecida.
+   304→
+   305→## HERO
+   306→
+   307→Grande hero premium dividido visualmente entre azeite/vinha.
+   308→
+   309→Headline:
+   310→
+   311→# Azeites, Vinhos e Sabores de Portugal
+   312→
+   313→Subheadline:
+   314→
+   315→> Uma seleção portuguesa de azeites, vinhos e produtos gourmet para consumidores, restaurantes, hotéis, lojas especializadas e importadores.
+   316→
+   317→CTAs:
+   318→
+   319→**Explorar Loja**
+   320→
+   321→**Sou Profissional**
+   322→
+   323→Adicionar fotografia premium de:
+   324→
+   325→* oliveiras;
+   326→* azeite;
+   327→* garrafa;
+   328→* azeitonas;
+   329→* vinhas;
+   330→* vinho;
+   331→* adega.
+   332→
+   333→Não usar fotografia genérica de supermercado.
+   334→
+   335→---
+   336→
+   337→# 8. ESCOLHA B2C / B2B
+   338→
+   339→Logo abaixo do hero criar dois grandes cards.
+   340→
+   341→## Para Si
+   342→
+   343→Texto:
+   344→
+   345→> Descubra vinhos, azeites, produtos gourmet e boxes cuidadosamente selecionadas.
+   346→
+   347→CTA:
+   348→
+   349→**Comprar agora**
+   350→
+   351→Imagem lifestyle premium.
+   352→
+   353→---
+   354→
+   355→## Para Profissionais
+   356→
+   357→Texto:
+   358→
+   359→> Preços profissionais, fornecimento por caixa, pedidos por palete e soluções para restauração, hotelaria e distribuição.
+   360→
+   361→CTA:
+   362→
+   363→**Entrar no Trade**
+   364→
+   365→Imagem de caixas/paletes/armazém premium.
+   366→
+   367→---
+   368→
+   369→# 9. CATEGORIAS
+   370→
+   371→Criar:
+   372→
+   373→### Azeites
+   374→
+   375→### Vinhos
+   376→
+   377→### Gourmet
+   378→
+   379→### Boxes & Presentes
+   380→
+   381→### Corporate Gifts
+   382→
+   383→### Exportação
+   384→
+   385→### Private Label
+   386→
+   387→Cards premium com imagem.
+   388→
+   389→Filtros devem funcionar.
+   390→
+   391→---
+   392→
+   393→# 10. CATÁLOGO MOCK
+   394→
+   395→Criar um catálogo inicial demonstrativo.
+   396→
+   397→IMPORTANTE:
+   398→
+   399→Estes produtos são MOCK e deverão estar identificados internamente:
+   400→
+   401→```ts
+   402→isMock: true
+   403→```
+   404→
+   405→Nunca apresentar alegações legais, certificações DOP/IGP ou produtores reais que não tenham sido fornecidos.
+   406→
+   407→## AZEITES
+   408→
+   409→### LT Azeite Virgem Extra Reserva
+   410→
+   411→SKU:
+   412→`LT-OIL-RES-500`
+   413→
+   414→Volume:
+   415→500 ml
+   416→
+   417→Preço:
+   418→€14,90
+   419→
+   420→Preço por litro:
+   421→€29,80/L
+   422→
+   423→Categoria:
+   424→Azeites
+   425→
+   426→Descrição:
+   427→
+   428→> Azeite virgem extra de perfil elegante e equilibrado, selecionado para acompanhar entradas, peixe, saladas e cozinha mediterrânica.
+   429→
+   430→---
+   431→
+   432→### LT Colheita Precoce
+   433→
+   434→SKU:
+   435→`LT-OIL-EARLY-500`
+   436→
+   437→500 ml
+   438→
+   439→€17,90
+   440→
+   441→---
+   442→
+   443→### LT Seleção Biológica
+   444→
+   445→SKU:
+   446→`LT-OIL-BIO-500`
+   447→
+   448→500 ml
+   449→
+   450→€16,50
+   451→
+   452→---
+   453→
+   454→### Pack Degustação de Azeites
+   455→
+   456→SKU:
+   457→`LT-OIL-TASTING-4`
+   458→
+   459→4 × 100 ml
+   460→
+   461→€39,00
+   462→
+   463→---
+   464→
+   465→# 11. VINHOS
+   466→
+   467→### Douro Tinto Seleção
+   468→
+   469→SKU:
+   470→`LT-WINE-DOURO-RED`
+   471→
+   472→750 ml
+   473→
+   474→€18,50
+   475→
+   476→18+
+   477→
+   478→---
+   479→
+   480→### Alentejo Reserva Tinto
+   481→
+   482→SKU:
+   483→`LT-WINE-ALENTEJO-RES`
+   484→
+   485→750 ml
+   486→
+   487→€22,90
+   488→
+   489→18+
+   490→
+   491→---
+   492→
+   493→### Vinho Verde Branco Seleção
+   494→
+   495→SKU:
+   496→`LT-WINE-VV-WHITE`
+   497→
+   498→750 ml
+   499→
+   500→€11,90
+   501→
+   502→18+
+   503→
+   504→---
+   505→
+   506→### Dão Branco Reserva
+   507→
+   508→SKU:
+   509→`LT-WINE-DAO-WHITE`
+   510→
+   511→750 ml
+   512→
+   513→€16,90
+   514→
+   515→18+
+   516→
+   517→---
+   518→
+   519→### Espumante Bruto Seleção
+   520→
+   521→SKU:
+   522→`LT-WINE-SPARKLING`
+   523→
+   524→750 ml
+   525→
+   526→€19,90
+   527→
+   528→18+
+   529→
+   530→Todos os produtos vínicos MOCK devem ter:
+   531→
+   532→```ts
+   533→alcohol: true
+   534→ageRestricted: true
+   535→```
+   536→
+   537→---
+   538→
+   539→# 12. GOURMET
+   540→
+   541→### Conservas Artesanais Seleção
+   542→
+   543→SKU:
+   544→`LT-GOURMET-CONSERVAS`
+   545→
+   546→€12,90
+   547→
+   548→---
+   549→
+   550→### Flor de Sal Premium
+   551→
+   552→SKU:
+   553→`LT-GOURMET-SALT`
+   554→
+   555→€7,90
+   556→
+   557→---
+   558→
+   559→### Seleção Gourmet Portuguesa
+   560→
+   561→SKU:
+   562→`LT-GOURMET-SELECTION`
+   563→
+   564→€24,90
+   565→
+   566→---
+   567→
+   568→# 13. BOXES
+   569→
+   570→### Box Descoberta de Portugal
+   571→
+   572→SKU:
+   573→`LT-BOX-DISCOVERY`
+   574→
+   575→Preço:
+   576→€59,00
+   577→
+   578→Conteúdo visual:
+   579→
+   580→* vinho;
+   581→* azeite;
+   582→* conservas;
+   583→* produto gourmet.
+   584→
+   585→---
+   586→
+   587→### Box Azeite & Vinho
+   588→
+   589→SKU:
+   590→`LT-BOX-OIL-WINE`
+   591→
+   592→€69,00
+   593→
+   594→18+
+   595→
+   596→---
+   597→
+   598→### Box Corporate Portugal
+   599→
+   600→SKU:
+   601→`LT-BOX-CORPORATE`
+   602→
+   603→€89,00
+   604→
+   605→18+
+   606→
+   607→Adicionar opção:
+   608→
+   609→`Personalização empresarial disponível`
+   610→
+   611→---
+   612→
+   613→# 14. PRODUCT CARDS
+   614→
+   615→Cada card B2C deve mostrar:
+   616→
+   617→* fotografia;
+   618→* categoria;
+   619→* nome;
+   620→* volume/peso;
+   621→* preço;
+   622→* preço por unidade de medida quando aplicável;
+   623→* rating MOCK visual;
+   624→* stock;
+   625→* botão Adicionar;
+   626→* wishlist visual;
+   627→* badge 18+ quando necessário.
+   628→
+   629→Não criar reviews falsas textuais.
+   630→
+   631→Se usar stars de demonstração, não dizer que representam avaliações reais.
+   632→
+   633→---
+   634→
+   635→# 15. PRODUCT DETAIL
+   636→
+   637→Criar rota:
+   638→
+   639→```text
+   640→/produto/[slug]
+   641→```
+   642→
+   643→Página com:
+   644→
+   645→* gallery;
+   646→* nome;
+   647→* preço;
+   648→* preço/unidade;
+   649→* descrição;
+   650→* características;
+   651→* origem;
+   652→* quantidade;
+   653→* adicionar ao carrinho;
+   654→* stock;
+   655→* informação de entrega;
+   656→* características alimentares;
+   657→* informação adicional;
+   658→* sugestões relacionadas.
+   659→
+   660→Criar estrutura preparada para futuramente ter:
+   661→
+   662→* ingredientes;
+   663→* alergénios;
+   664→* valor nutricional;
+   665→* produtor;
+   666→* lote;
+   667→* EAN;
+   668→* país de origem;
+   669→* certificações;
+   670→* ficha técnica;
+   671→* ano/vindima;
+   672→* castas;
+   673→* teor alcoólico.
+   674→
+   675→Não inventar estes dados nesta fase.
+   676→
+   677→Onde não existirem:
+   678→
+   679→`Informação a confirmar`
+   680→
+   681→não deve aparecer na UI comercial.
+   682→
+   683→Simplesmente omitir.
+   684→
+   685→---
+   686→
+   687→# 16. AGE GATE
+   688→
+   689→Como o site comercializa vinho, implementar age gate elegante.
+   690→
+   691→Primeira visita:
+   692→
+   693→Modal:
+   694→
+   695→# Bem-vindo à LiquidThesis
+   696→
+   697→> Para aceder à nossa seleção de vinhos, confirme que tem 18 anos ou mais.
+   698→
+   699→Botões:
+   700→
+   701→**Tenho 18 anos ou mais**
+   702→
+   703→**Ainda não tenho 18 anos**
+   704→
+   705→Guardar confirmação em localStorage/cookie.
+   706→
+   707→Não tornar o modal agressivo.
+   708→
+   709→No footer:
+   710→
+   711→`Venda de bebidas alcoólicas proibida a menores de 18 anos.`
+   712→
+   713→Adicionar:
+   714→
+   715→`Beba com moderação.`
+   716→
+   717→Produtos sem álcool podem continuar visíveis estruturalmente, mas qualquer compra de vinho exige confirmação 18+.
+   718→
+   719→---
+   720→
+   721→# 17. LISTAGEM / LOJA
+   722→
+   723→Criar rota:
+   724→
+   725→`/loja`
+   726→
+   727→Filtros funcionais client-side:
+   728→
+   729→* Todos
+   730→* Azeites
+   731→* Vinhos
+   732→* Gourmet
+   733→* Boxes
+   734→* Até €15
+   735→* €15–€30
+   736→* €30–€60
+   737→* €60+
+   738→
+   739→Ordenação:
+   740→
+   741→* Destaques
+   742→* Preço crescente
+   743→* Preço decrescente
+   744→* Nome
+   745→
+   746→Search funcional.
+   747→
+   748→---
+   749→
+   750→# 18. CARRINHO
+   751→
+   752→Implementar carrinho REAL client-side.
+   753→
+   754→Persistência:
+   755→
+   756→`localStorage`
+   757→
+   758→Criar CartProvider ou Zustand se realmente necessário.
+   759→
+   760→Funções:
+   761→
+   762→* adicionar;
+   763→* remover;
+   764→* alterar quantidade;
+   765→* limpar;
+   766→* subtotal;
+   767→* shipping;
+   768→* total;
+   769→* contagem de itens.
+   770→
+   771→Drawer lateral ao clicar no ícone do carrinho.
+   772→
+   773→Criar também:
+   774→
+   775→`/carrinho`
+   776→
+   777→---
+   778→
+   779→# 19. SHIPPING MOCK
+   780→
+   781→Portugal Continental:
+   782→
+   783→### B2C
+   784→
+   785→Até €68,99:
+   786→
+   787→€4,90
+   788→
+   789→A partir de €69:
+   790→
+   791→GRÁTIS
+   792→
+   793→Criar função única server-side/client-safe para cálculo visual.
+   794→
+   795→Não duplicar regras arbitrariamente.
+   796→
+   797→Para MVP:
+   798→
+   799→### Carrinhos com vinho
+   800→
+   801→Checkout disponível inicialmente apenas para entrega em Portugal.
+   802→
+   803→### Carrinhos sem álcool
+   804→
+   805→Preparar tecnicamente países EU adicionais:
+   806→
+   807→* Portugal
+   808→* Espanha
+   809→* França
+   810→* Alemanha
+   811→* Bélgica
+   812→* Países Baixos
+   813→* Luxemburgo
+   814→* Itália
+   815→
+   816→Mas colocar uma configuração central:
+   817→
+   818→```ts
+   819→export const commerceConfig = {
+   820→  wineShippingCountries: ["PT"],
+   821→  foodShippingCountries: [
+   822→    "PT",
+   823→    "ES",
+   824→    "FR",
+   825→    "DE",
+   826→    "BE",
+   827→    "NL",
+   828→    "LU",
+   829→    "IT"
+   830→  ]
+   831→}
+   832→```
+   833→
+   834→Isto deve ser facilmente alterável.
+   835→
+   836→---
+   837→
+   838→# 20. STRIPE — REQUISITO CRÍTICO
+   839→
+   840→Implementar Stripe corretamente.
+   841→
+   842→Na primeira fase:
+   843→
+   844→**STRIPE TEST MODE**
+   845→
+   846→Nunca colocar secret key no frontend.
+   847→
+   848→Nunca criar valores de pagamento com base no preço recebido diretamente do browser.
+   849→
+   850→O browser envia APENAS:
+   851→
+   852→```json
+   853→{
+   854→  "items": [
+   855→    {
+   856→      "sku": "LT-OIL-RES-500",
+   857→      "quantity": 2
+   858→    }
+   859→  ],
+   860→  "customerType": "B2C"
+   861→}
+   862→```
+   863→
+   864→O servidor:
+   865→
+   866→1. procura o SKU no catálogo server-side;
+   867→2. confirma que existe;
+   868→3. confirma preço;
+   869→4. confirma quantidade;
+   870→5. confirma disponibilidade;
+   871→6. identifica se contém álcool;
+   872→7. calcula shipping;
+   873→8. cria os Stripe line_items;
+   874→9. cria a Checkout Session.
+   875→
+   876→A autoridade do preço é SEMPRE server-side.
+   877→
+   878→---
+   879→
+   880→# 21. STRIPE CHECKOUT ROUTE
+   881→
+   882→Criar:
+   883→
+   884→```text
+   885→POST /api/checkout
+   886→```
+   887→
+   888→Utilizar:
+   889→
+   890→`stripe.checkout.sessions.create()`
+   891→
+   892→Com:
+   893→
+   894→```ts
+   895→mode: "payment"
+   896→```
+   897→
+   898→Criar line items server-side.
+   899→
+   900→Pode utilizar inicialmente:
+   901→
+   902→```ts
+   903→price_data
+   904→```
+   905→
+   906→com:
+   907→
+   908→* currency EUR;
+   909→* product_data;
+   910→* product name;
+   911→* metadata SKU;
+   912→* unit_amount.
+   913→
+   914→Não obrigar à criação manual de cada produto no Stripe nesta fase.
+   915→
+   916→Preparar arquitetura para posteriormente utilizar Stripe Price IDs.
+   917→
+   918→---
+   919→
+   920→# 22. CHECKOUT CONFIG
+   921→
+   922→Recolher:
+   923→
+   924→* email;
+   925→* nome;
+   926→* billing address;
+   927→* shipping address;
+   928→* telefone se suportado/configurado;
+   929→* consentimentos necessários.
+   930→
+   931→Success URL:
+   932→
+   933→```text
+   934→/checkout/sucesso?session_id={CHECKOUT_SESSION_ID}
+   935→```
+   936→
+   937→Cancel URL:
+   938→
+   939→```text
+   940→/carrinho?checkout=cancelled
+   941→```
+   942→
+   943→Adicionar metadata:
+   944→
+   945→```text
+   946→source = liquidthesis-web
+   947→customer_type = B2C
+   948→cart_reference = ...
+   949→contains_alcohol = true|false
+   950→```
+   951→
+   952→Não colocar dados sensíveis em metadata.
+   953→
+   954→---
+   955→
+   956→# 23. STRIPE SHIPPING
+   957→
+   958→Criar shipping option dinamicamente.
+   959→
+   960→Portugal:
+   961→
+   962→€4,90
+   963→
+   964→ou:
+   965→
+   966→€0,00 quando subtotal >= €69.
+   967→
+   968→Shipping deve ser recalculado no servidor.
+   969→
+   970→O browser não controla o preço final de shipping.
+   971→
+   972→---
+   973→
+   974→# 24. STRIPE WEBHOOK
+   975→
+   976→Criar:
+   977→
+   978→```text
+   979→POST /api/stripe/webhook
+   980→```
+   981→
+   982→Validar corretamente:
+   983→
+   984→`STRIPE_WEBHOOK_SECRET`
+   985→
+   986→Tratar inicialmente:
+   987→
+   988→```text
+   989→checkout.session.completed
+   990→checkout.session.async_payment_succeeded
+   991→checkout.session.async_payment_failed
+   992→payment_intent.payment_failed
+   993→```
+   994→
+   995→Como ainda não existe DB:
+   996→
+   997→usar structured server logging.
+   998→
+   999→Exemplo:
+  1000→
+  1001→```ts
+  1002→console.info("stripe.checkout.completed", {
+  1003→  sessionId,
+  1004→  paymentStatus,
+  1005→  customerEmail,
+  1006→  amountTotal
+  1007→})
+  1008→```
+  1009→
+  1010→Não imprimir:
+  1011→
+  1012→* card data;
+  1013→* secrets;
+  1014→* client_secret;
+  1015→* dados sensíveis desnecessários.
+  1016→
+  1017→Preparar funções:
+  1018→
+  1019→```ts
+  1020→handleCheckoutCompleted()
+  1021→handlePaymentFailed()
+  1022→```
+  1023→
+  1024→para futura ligação a DB/order service.
+  1025→
+  1026→---
+  1027→
+  1028→# 25. SUCCESS PAGE
+  1029→
+  1030→Criar:
+  1031→
+  1032→`/checkout/sucesso`
+  1033→
+  1034→Não confiar apenas em query params.
+  1035→
+  1036→Consultar server-side a Checkout Session usando:
+  1037→
+  1038→`session_id`
+  1039→
+  1040→Mostrar:
+  1041→
+  1042→# Obrigado pela sua encomenda
+  1043→
+  1044→* referência;
+  1045→* email;
+  1046→* total;
+  1047→* estado do pagamento.
+  1048→
+  1049→CTA:
+  1050→
+  1051→`Continuar a comprar`
+  1052→
+  1053→Se Test Mode:
+  1054→
+  1055→mostrar badge discreto:
+  1056→
+  1057→`Pagamento de teste`
+  1058→
+  1059→---
+  1060→
+  1061→# 26. DEMO MODE / LIVE MODE
+  1062→
+  1063→Criar:
+  1064→
+  1065→```env
+  1066→NEXT_PUBLIC_COMMERCE_MODE=demo
+  1067→```
+  1068→
+  1069→Valores:
+  1070→
+  1071→```text
+  1072→demo
+  1073→live
+  1074→```
+  1075→
+  1076→Em demo:
+  1077→
+  1078→mostrar no topo ou footer discretamente:
+  1079→
+  1080→`Catálogo demonstrativo`
+  1081→
+  1082→ou:
+  1083→
+  1084→`Versão de demonstração`
+  1085→
+  1086→Stripe deve usar test keys.
+  1087→
+  1088→Nunca misturar test/live.
+  1089→
+  1090→---
+  1091→
+  1092→# 27. ENV VARIABLES
+  1093→
+  1094→Criar:
+  1095→
+  1096→`.env.example`
+  1097→
+  1098→com:
+  1099→
+  1100→```env
+  1101→NEXT_PUBLIC_SITE_URL=http://localhost:3000
+  1102→NEXT_PUBLIC_COMMERCE_MODE=demo
+  1103→
+  1104→STRIPE_SECRET_KEY=
+  1105→STRIPE_WEBHOOK_SECRET=
+  1106→
+  1107→NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+  1108→
+  1109→STRIPE_AUTOMATIC_TAX=false
+  1110→```
+  1111→
+  1112→Não commit de:
+  1113→
+  1114→`.env`
+  1115→`.env.local`
+  1116→
+  1117→Adicionar ao `.gitignore`.
+  1118→
+  1119→---
+  1120→
+  1121→# 28. STRIPE AUTOMATIC TAX
+  1122→
+  1123→Preparar suporte futuro.
+  1124→
+  1125→Por defeito:
+  1126→
+  1127→```env
+  1128→STRIPE_AUTOMATIC_TAX=false
+  1129→```
+  1130→
+  1131→Não ligar automaticamente sem configuração fiscal real.
+  1132→
+  1133→Os preços apresentados ao consumidor devem ser configurados como preços finais de demonstração.
+  1134→
+  1135→---
+  1136→
+  1137→# 29. B2B — LIQUIDTHESIS TRADE
+  1138→
+  1139→Criar:
+  1140→
+  1141→`/trade`
+  1142→
+  1143→Hero:
+  1144→
+  1145→# LiquidThesis Trade
+  1146→
+  1147→Subheadline:
+  1148→
+  1149→> Fornecimento de vinhos, azeites e produtos portugueses para restauração, hotelaria, retalho e distribuição.
+  1150→
+  1151→CTAs:
+  1152→
+  1153→**Criar Conta Profissional**
+  1154→
+  1155→**Pedir Cotação**
+  1156→
+  1157→---
+  1158→
+  1159→# 30. B2B BENEFITS
+  1160→
+  1161→Mostrar cards:
+  1162→
+  1163→### Preço por caixa
+  1164→
+  1165→Condições profissionais para compras recorrentes.
+  1166→
+  1167→### Cotação por palete
+  1168→
+  1169→Condições específicas para volumes maiores.
+  1170→
+  1171→### Exportação UE
+  1172→
+  1173→Preparação documental e logística.
+  1174→
+  1175→### Conta profissional
+  1176→
+  1177→Histórico, encomendas e faturação.
+  1178→
+  1179→### Corporate Gifts
+  1180→
+  1181→Volumes empresariais e personalização.
+  1182→
+  1183→### Private Label
+  1184→
+  1185→Projetos sob marca própria.
+  1186→
+  1187→---
+  1188→
+  1189→# 31. MOCK B2B PRICING
+  1190→
+  1191→Estruturar cada produto para poder ter:
+  1192→
+  1193→```ts
+  1194→b2b: {
+  1195→  unitsPerCase: 6,
+  1196→  casePrice: 79.90,
+  1197→  tierPrices: [
+  1198→    {
+  1199→      minCases: 1,
+  1200→      pricePerCase: 79.90
+  1201→    },
+  1202→    {
+  1203→      minCases: 5,
+  1204→      pricePerCase: 74.90
+  1205→    },
+  1206→    {
+  1207→      minCases: 10,
+  1208→      pricePerCase: 69.90
+  1209→    }
+  1210→  ],
+  1211→  palletQuote: true
+  1212→}
+  1213→```
+  1214→
+  1215→Estas condições são MOCK.
+  1216→
+  1217→Não vender ainda publicamente como condições comerciais reais.
+  1218→
+  1219→---
+  1220→
+  1221→# 32. ÁREA PROFISSIONAL MOCK
+  1222→
+  1223→Criar:
+  1224→
+  1225→`/trade/dashboard`
+  1226→
+  1227→Nesta fase NÃO implementar autenticação real.
+  1228→
+  1229→Criar um:
+  1230→
+  1231→`Demo Professional Account`
+  1232→
+  1233→Banner:
+  1234→
+  1235→`Modo demonstração`
+  1236→
+  1237→Dashboard com:
+  1238→
+  1239→* resumo;
+  1240→* catálogo profissional;
+  1241→* pedidos de cotação;
+  1242→* encomendas;
+  1243→* documentos;
+  1244→* condições comerciais;
+  1245→* conta da empresa.
+  1246→
+  1247→Usar MOCK DATA.
+  1248→
+  1249→Arquitetar para futura autenticação.
+  1250→
+  1251→---
+  1252→
+  1253→# 33. PEDIDO DE COTAÇÃO
+  1254→
+  1255→Criar:
+  1256→
+  1257→`/trade/cotacao`
+  1258→
+  1259→Form:
+  1260→
+  1261→* Empresa
+  1262→* NIF/VAT
+  1263→* Nome de contacto
+  1264→* Email
+  1265→* Telefone
+  1266→* País
+  1267→* Tipo de negócio
+  1268→* Produtos
+  1269→* Quantidade aproximada
+  1270→* Observações
+  1271→
+  1272→Como ainda não existe DB:
+  1273→
+  1274→o botão pode criar uma confirmação local MOCK.
+  1275→
+  1276→Mas estruturar:
+  1277→
+  1278→```ts
+  1279→submitQuoteRequest()
+  1280→```
+  1281→
+  1282→para futura API.
+  1283→
+  1284→Não fingir que enviou um pedido real se nenhum backend existir.
+  1285→
+  1286→Mensagem:
+  1287→
+  1288→`Pedido preparado em modo demonstração.`
+  1289→
+  1290→---
+  1291→
+  1292→# 34. PRODUTORES
+  1293→
+  1294→Criar página:
+  1295→
+  1296→`/produtores`
+  1297→
+  1298→Headline:
+  1299→
+  1300→# É produtor? Cresça connosco.
+  1301→
+  1302→Texto:
+  1303→
+  1304→> Procuramos produtores portugueses de azeite, vinho e produtos gourmet com capacidade para servir consumidores, restauração, retalho e mercados internacionais.
+  1305→
+  1306→CTA:
+  1307→
+  1308→`Tornar-se Parceiro`
+  1309→
+  1310→Form:
+  1311→
+  1312→* Empresa
+  1313→* NIF
+  1314→* Contacto
+  1315→* Email
+  1316→* Website
+  1317→* Região
+  1318→* Tipo de produto
+  1319→* Capacidade aproximada
+  1320→* Exporta atualmente?
+  1321→* Observações
+  1322→
+  1323→Modo demo nesta fase.
+  1324→
+  1325→---
+  1326→
+  1327→# 35. LIQUIDTHESIS CLUB
+  1328→
+  1329→Criar:
+  1330→
+  1331→`/clube`
+  1332→
+  1333→Três planos visuais.
+  1334→
+  1335→## Explorer
+  1336→
+  1337→€29/mês
+  1338→
+  1339→## Select
+  1340→
+  1341→€49/mês
+  1342→
+  1343→## Reserve
+  1344→
+  1345→€79/mês
+  1346→
+  1347→IMPORTANTE:
+  1348→
+  1349→São planos conceptuais/MOCK.
+  1350→
+  1351→Não criar recurring Stripe subscriptions ainda sem configuração de produtos reais.
+  1352→
+  1353→Os CTAs devem dizer:
+  1354→
+  1355→`Brevemente`
+  1356→
+  1357→ou:
+  1358→
+  1359→`Tenho interesse`
+  1360→
+  1361→Preparar componente para futura ligação Stripe Billing.
+  1362→
+  1363→---
+  1364→
+  1365→# 36. CORPORATE GIFTS
+  1366→
+  1367→Criar:
+  1368→
+  1369→`/corporate`
+  1370→
+  1371→Headline:
+  1372→
+  1373→# Presentes portugueses que representam a sua marca
+  1374→
+  1375→Para:
+  1376→
+  1377→* Natal;
+  1378→* eventos;
+  1379→* clientes;
+  1380→* colaboradores;
+  1381→* parceiros;
+  1382→* congressos;
+  1383→* hospitality.
+  1384→
+  1385→CTA:
+  1386→
+  1387→**Pedir proposta**
+  1388→
+  1389→Mostrar:
+  1390→
+  1391→* 25 unidades
+  1392→* 50 unidades
+  1393→* 100 unidades
+  1394→* 250+
+  1395→* embalagem personalizada
+  1396→* cartão
+  1397→* sleeve
+  1398→* branding empresarial
+  1399→
+  1400→Sem preços comerciais definitivos.
+  1401→
+  1402→---
+  1403→
+  1404→# 37. PRIVATE LABEL
+  1405→
+  1406→Criar:
+  1407→
+  1408→`/private-label`
+  1409→
+  1410→Headline:
+  1411→
+  1412→# A sua marca. A nossa seleção.
+  1413→
+  1414→Categorias:
+  1415→
+  1416→* azeite;
+  1417→* vinho;
+  1418→* boxes;
+  1419→* gourmet.
+  1420→
+  1421→Fluxo:
+  1422→
+  1423→1. Brief
+  1424→2. Seleção
+  1425→3. Amostras
+  1426→4. Branding
+  1427→5. Produção
+  1428→6. Entrega
+  1429→
+  1430→CTA:
+  1431→
+  1432→`Falar sobre um projeto`
+  1433→
+  1434→---
+  1435→
+  1436→# 38. EXPORTAÇÃO
+  1437→
+  1438→Criar:
+  1439→
+  1440→`/exportacao`
+  1441→
+  1442→Comunicar capacidade futura para servir mercados europeus.
+  1443→
+  1444→Não fazer afirmações falsas sobre presença atual.
+  1445→
+  1446→Usar:
+  1447→
+  1448→> Soluções preparadas para operações B2B nacionais e internacionais.
+  1449→
+  1450→e:
+  1451→
+  1452→> Contacte-nos para verificar disponibilidade, documentação e condições aplicáveis ao seu destino.
+  1453→
+  1454→---
+  1455→
+  1456→# 39. ABOUT
+  1457→
+  1458→Criar:
+  1459→
+  1460→`/sobre`
+  1461→
+  1462→Não inventar história empresarial, anos de experiência, número de clientes ou países.
+  1463→
+  1464→Posicionamento permitido:
+  1465→
+  1466→> A LiquidThesis nasce com o objetivo de aproximar produtores, empresas e consumidores através de uma seleção cuidada de azeites, vinhos e sabores portugueses.
+  1467→
+  1468→Comunicar:
+  1469→
+  1470→* curadoria;
+  1471→* origem;
+  1472→* qualidade;
+  1473→* relação com produtores;
+  1474→* comércio profissional;
+  1475→* tecnologia;
+  1476→* exportação.
+  1477→
+  1478→---
+  1479→
+  1480→# 40. DADOS INSTITUCIONAIS — EXATOS
+  1481→
+  1482→Estes dados devem ser utilizados SEM ALTERAÇÕES.
+  1483→
+  1484→## Firma
+  1485→
+  1486→**LIQUIDTHESIS, UNIPESSOAL LDA**
+  1487→
+  1488→## NIPC
+  1489→
+  1490→**519 440 390**
+  1491→
+  1492→Internamente pode permanecer:
+  1493→
+  1494→`519440390`
+  1495→
+  1496→## Natureza jurídica
+  1497→
+  1498→**Sociedade por Quotas**
+  1499→
+  1500→## Sede
+  1501→
+  1502→**Rua de São Nuno, 92**
+  1503→**2560-195 Soltaria**
+  1504→**São Pedro da Cadeira**
+  1505→**Torres Vedras, Lisboa**
+  1506→**Portugal**
+  1507→
+  1508→## Capital social
+  1509→
+  1510→**€20.000,00**
+  1511→
+  1512→## CAE Principal
+  1513→
+  1514→**46390-R4 — Comércio por grosso não especializado de produtos alimentares, bebidas e tabaco**
+  1515→
+  1516→## Gerência
+  1517→
+  1518→**Rui Jorge Alves Barata da Silva**
+  1519→
+  1520→Nunca publicar o NIF pessoal do gerente.
+  1521→
+  1522→---
+  1523→
+  1524→# 41. INFORMAÇÃO QUE NÃO DEVE SER PUBLICADA
+  1525→
+  1526→NÃO colocar no website:
+  1527→
+  1528→* código de acesso à Certidão Permanente;
+  1529→* NIF pessoal do gerente;
+  1530→* dados privados;
+  1531→* credenciais;
+  1532→* Stripe secrets;
+  1533→* qualquer chave API.
+  1534→
+  1535→O código de acesso da Certidão Permanente NÃO deve constar no repositório, frontend, `.env.example` ou documentação pública.
+  1536→
+  1537→---
+  1538→
+  1539→# 42. FOOTER LEGAL
+  1540→
+  1541→Quero um footer extremamente profissional.
+  1542→
+  1543→Estrutura:
+  1544→
+  1545→## Loja
+  1546→
+  1547→* Azeites
+  1548→* Vinhos
+  1549→* Gourmet
+  1550→* Boxes
+  1551→* Novidades
+  1552→
+  1553→## Trade
+  1554→
+  1555→* Área Profissional
+  1556→* Pedir Cotação
+  1557→* Exportação
+  1558→* Corporate Gifts
+  1559→* Private Label
+  1560→
+  1561→## Empresa
+  1562→
+  1563→* Sobre
+  1564→* Produtores
+  1565→* Contacto
+  1566→
+  1567→## Apoio
+  1568→
+  1569→* Perguntas Frequentes
+  1570→* Envios
+  1571→* Devoluções
+  1572→* Termos e Condições
+  1573→* Política de Privacidade
+  1574→* Política de Cookies
+  1575→
+  1576→## Legal
+  1577→
+  1578→* Livro de Reclamações
+  1579→* Resolução de Litígios
+  1580→
+  1581→Newsletter UI.
+  1582→
+  1583→Redes sociais apenas se existirem URLs reais.
+  1584→
+  1585→Não criar links fictícios para Instagram/Facebook/LinkedIn.
+  1586→
+  1587→---
+  1588→
+  1589→# 43. FOOTER CORPORATE LINE
+  1590→
+  1591→No final:
+  1592→
+  1593→**LIQUIDTHESIS, UNIPESSOAL LDA**
+  1594→
+  1595→`NIPC 519 440 390`
+  1596→
+  1597→`Rua de São Nuno, 92 · 2560-195 Soltaria · São Pedro da Cadeira · Torres Vedras · Portugal`
+  1598→
+  1599→`Capital social €20.000,00`
+  1600→
+  1601→Depois:
+  1602→
+  1603→`© {CURRENT_YEAR} LIQUIDTHESIS, UNIPESSOAL LDA. Todos os direitos reservados.`
+  1604→
+  1605→Ano SEMPRE dinâmico.
+  1606→
+  1607→Não usar 2024.
+  1608→
+  1609→---
+  1610→
+  1611→# 44. ÁLCOOL
+  1612→
+  1613→Mostrar no footer:
+  1614→
+  1615→`Venda de bebidas alcoólicas proibida a menores de 18 anos.`
+  1616→
+  1617→`Beba com moderação.`
+  1618→
+  1619→Evitar publicidade que:
+  1620→
+  1621→* associe álcool a sucesso;
+  1622→* incentive consumo excessivo;
+  1623→* seja dirigida a menores.
+  1624→
+  1625→---
+  1626→
+  1627→# 45. LIVRO DE RECLAMAÇÕES
+  1628→
+  1629→Adicionar link de destaque no footer:
+  1630→
+  1631→**Livro de Reclamações Eletrónico**
+  1632→
+  1633→Abrir em nova tab.
+  1634→
+  1635→Utilizar o portal oficial português.
+  1636→
+  1637→Não criar uma página falsa de reclamações.
+  1638→
+  1639→---
+  1640→
+  1641→# 46. RAL
+  1642→
+  1643→Criar página:
+  1644→
+  1645→`/resolucao-litigios`
+  1646→
+  1647→Indicar, para a sede em Torres Vedras:
+  1648→
+  1649→**CNIACC — Centro Nacional de Informação e Arbitragem de Conflitos de Consumo**
+  1650→
+  1651→Criar link para website oficial.
+  1652→
+  1653→Adicionar disclaimer:
+  1654→
+  1655→> Em caso de litígio de consumo, o consumidor pode recorrer a uma entidade de resolução alternativa de litígios de consumo legalmente competente.
+  1656→
+  1657→Não inventar adesão plena da LiquidThesis ao CNIACC caso isso não esteja confirmado.
+  1658→
+  1659→---
+  1660→
+  1661→# 47. CONTACTOS
+  1662→
+  1663→Criar:
+  1664→
+  1665→`/contacto`
+  1666→
+  1667→Como NÃO foram fornecidos:
+  1668→
+  1669→* email;
+  1670→* telefone;
+  1671→
+  1672→NÃO inventá-los.
+  1673→
+  1674→Criar formulário visual e centralizar os dados da empresa em:
+  1675→
+  1676→```ts
+  1677→company.ts
+  1678→```
+  1679→
+  1680→Permitir adicionar posteriormente:
+  1681→
+  1682→```ts
+  1683→email
+  1684→phone
+  1685→whatsapp
+  1686→instagram
+  1687→facebook
+  1688→linkedin
+  1689→```
+  1690→
+  1691→Se um valor estiver vazio:
+  1692→
+  1693→não renderizar.
+  1694→
+  1695→---
+  1696→
+  1697→# 48. TERMOS E CONDIÇÕES
+  1698→
+  1699→Criar uma estrutura profissional em:
+  1700→
+  1701→`/termos`
+  1702→
+  1703→Incluindo seções:
+  1704→
+  1705→* identificação do operador;
+  1706→* âmbito;
+  1707→* produtos;
+  1708→* preços;
+  1709→* encomendas;
+  1710→* pagamento;
+  1711→* entrega;
+  1712→* disponibilidade;
+  1713→* direito de livre resolução quando aplicável;
+  1714→* exceções quando legalmente aplicáveis;
+  1715→* devoluções;
+  1716→* reclamações;
+  1717→* propriedade intelectual;
+  1718→* proteção de dados;
+  1719→* responsabilidade;
+  1720→* legislação aplicável;
+  1721→* resolução de conflitos.
+  1722→
+  1723→Não apresentar o texto como parecer jurídico definitivo.
+  1724→
+  1725→Estruturar de modo a poder ser revisto por assessoria jurídica antes de LIVE.
+  1726→
+  1727→---
+  1728→
+  1729→# 49. PRIVACIDADE
+  1730→
+  1731→Criar:
+  1732→
+  1733→`/privacidade`
+  1734→
+  1735→RGPD-ready.
+  1736→
+  1737→Abranger:
+  1738→
+  1739→* dados recolhidos;
+  1740→* finalidade;
+  1741→* base jurídica;
+  1742→* pagamentos;
+  1743→* Stripe;
+  1744→* cookies;
+  1745→* analytics;
+  1746→* formulários;
+  1747→* conservação;
+  1748→* direitos do titular;
+  1749→* contacto.
+  1750→
+  1751→Como ainda não existe email de privacidade fornecido:
+  1752→
+  1753→não inventar.
+  1754→
+  1755→Utilizar indicação genérica:
+  1756→
+  1757→`através dos contactos oficiais disponibilizados neste website`
+  1758→
+  1759→até os dados serem fornecidos.
+  1760→
+  1761→---
+  1762→
+  1763→# 50. COOKIES
+  1764→
+  1765→Criar:
+  1766→
+  1767→`/cookies`
+  1768→
+  1769→e cookie consent UI.
+  1770→
+  1771→Categorias:
+  1772→
+  1773→* Necessários
+  1774→* Analytics
+  1775→* Marketing
+  1776→
+  1777→Por defeito:
+  1778→
+  1779→apenas necessários ativos.
+  1780→
+  1781→Não instalar Google Analytics, Meta Pixel ou outros trackers sem consentimento/configuração.
+  1782→
+  1783→---
+  1784→
+  1785→# 51. SEO
+  1786→
+  1787→Configurar metadata completa.
+  1788→
+  1789→Title homepage:
+  1790→
+  1791→`LiquidThesis | Azeites, Vinhos e Sabores de Portugal`
+  1792→
+  1793→Description:
+  1794→
+  1795→`Seleção portuguesa de azeites, vinhos, produtos gourmet e soluções B2B para restauração, hotelaria, retalho e distribuição.`
+  1796→
+  1797→Criar:
+  1798→
+  1799→* metadata;
+  1800→* OpenGraph;
+  1801→* sitemap;
+  1802→* robots.txt;
+  1803→* favicon placeholder premium;
+  1804→* canonical strategy;
+  1805→* Product JSON-LD onde aplicável;
+  1806→* Organization JSON-LD.
+  1807→
+  1808→Não inserir reviews/rating schema falsos.
+  1809→
+  1810→---
+  1811→
+  1812→# 52. URLS
+  1813→
+  1814→Criar pelo menos:
+  1815→
+  1816→```text
+  1817→/
+  1818→/loja
+  1819→/azeites
+  1820→/vinhos
+  1821→/gourmet
+  1822→/boxes
+  1823→/produto/[slug]
+  1824→
+  1825→/carrinho
+  1826→/checkout/sucesso
+  1827→
+  1828→/trade
+  1829→/trade/cotacao
+  1830→/trade/dashboard
+  1831→
+  1832→/produtores
+  1833→/clube
+  1834→/corporate
+  1835→/private-label
+  1836→/exportacao
+  1837→
+  1838→/sobre
+  1839→/contacto
+  1840→
+  1841→/termos
+  1842→/privacidade
+  1843→/cookies
+  1844→/envios
+  1845→/devolucoes
+  1846→/resolucao-litigios
+  1847→```
+  1848→
+  1849→---
+  1850→
+  1851→# 53. RESPONSIVE
+  1852→
+  1853→O site deve ficar perfeito em:
+  1854→
+  1855→* desktop 1440+
+  1856→* laptop
+  1857→* tablet
+  1858→* mobile 390 px
+  1859→
+  1860→Não simplesmente empilhar tudo.
+  1861→
+  1862→Criar mobile experience real:
+  1863→
+  1864→* menu drawer;
+  1865→* filtros mobile;
+  1866→* cart drawer;
+  1867→* sticky CTA quando fizer sentido;
+  1868→* touch targets corretos.
+  1869→
+  1870→---
+  1871→
+  1872→# 54. ACESSIBILIDADE
+  1873→
+  1874→Garantir:
+  1875→
+  1876→* semantic HTML;
+  1877→* labels;
+  1878→* alt text;
+  1879→* keyboard navigation;
+  1880→* visible focus;
+  1881→* aria onde necessário;
+  1882→* contraste adequado;
+  1883→* reduced motion quando aplicável.
+  1884→
+  1885→---
+  1886→
+  1887→# 55. PERFORMANCE
+  1888→
+  1889→O site deve ser muito rápido.
+  1890→
+  1891→Utilizar:
+  1892→
+  1893→* next/image;
+  1894→* responsive images;
+  1895→* lazy loading;
+  1896→* server components;
+  1897→* evitar dependências pesadas;
+  1898→* evitar animações desnecessárias;
+  1899→* otimizar fonts;
+  1900→* limitar client JS.
+  1901→
+  1902→Objetivo:
+  1903→
+  1904→Lighthouse elevado.
+  1905→
+  1906→---
+  1907→
+  1908→# 56. IMAGENS
+  1909→
+  1910→Utilizar imagens premium coerentes com:
+  1911→
+  1912→* olive groves;
+  1913→* Portuguese vineyards;
+  1914→* dark wine bottles;
+  1915→* olive oil bottles;
+  1916→* tasting tables;
+  1917→* premium gift boxes;
+  1918→* gourmet products;
+  1919→* wineries;
+  1920→* producers.
+  1921→
+  1922→Não usar logos ou embalagens de marcas reais sem autorização.
+  1923→
+  1924→Como o catálogo é MOCK, criar imagens genéricas e neutras.
+  1925→
+  1926→Não colocar certificações falsas nos rótulos.
+  1927→
+  1928→---
+  1929→
+  1930→# 57. MICROINTERAÇÕES
+  1931→
+  1932→Adicionar motion subtil:
+  1933→
+  1934→* hover cards;
+  1935→* menu;
+  1936→* cart;
+  1937→* CTA;
+  1938→* reveal leve;
+  1939→* product image hover;
+  1940→* transitions.
+  1941→
+  1942→Nada exagerado.
+  1943→
+  1944→Evitar aparência de template SaaS.
+  1945→
+  1946→O objetivo é:
+  1947→
+  1948→**premium Portuguese commerce.**
+  1949→
+  1950→---
+  1951→
+  1952→# 58. MOCK MODE VISUAL
+  1953→
+  1954→Quero que seja possível testar todo o fluxo.
+  1955→
+  1956→Homepage → Produto → Carrinho → Stripe Test Checkout → Success.
+  1957→
+  1958→Mas como os produtos ainda são MOCK:
+  1959→
+  1960→mostrar discretamente:
+  1961→
+  1962→`Catálogo demonstrativo`
+  1963→
+  1964→quando:
+  1965→
+  1966→```env
+  1967→NEXT_PUBLIC_COMMERCE_MODE=demo
+  1968→```
+  1969→
+  1970→Quando:
+  1971→
+  1972→```env
+  1973→NEXT_PUBLIC_COMMERCE_MODE=live
+  1974→```
+  1975→
+  1976→essa informação desaparece.
+  1977→
+  1978→---
+  1979→
+  1980→# 59. SECURITY
+  1981→
+  1982→Obrigatório:
+  1983→
+  1984→* sanitizar inputs;
+  1985→* validar payload APIs;
+  1986→* usar Zod;
+  1987→* server-side price authority;
+  1988→* Stripe webhook signature verification;
+  1989→* não expor secrets;
+  1990→* no `dangerouslySetInnerHTML` desnecessário;
+  1991→* não colocar tokens no repository;
+  1992→* não guardar cartão;
+  1993→* não manipular dados de cartão diretamente;
+  1994→* não logar secrets.
+  1995→
+  1996→---
+  1997→
+  1998→# 60. ERROR HANDLING
+  1999→
+  2000→Criar:
+
+[showing lines 1-2000 of 2347; use offset=2001 with limit to continue reading]

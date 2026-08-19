@@ -1,0 +1,2346 @@
+# LIQUIDTHESIS — MASTER IMPLEMENTATION PROMPT
+
+Quero que atues como **Lead Product Designer + Senior Full-Stack Engineer + E-commerce Architect** e construas a primeira versão funcional e deployável do website oficial da:
+
+**LIQUIDTHESIS, UNIPESSOAL LDA**
+
+O resultado deve ser um projeto real, funcional, profissional e production-ready ao nível de frontend e infraestrutura, mesmo que nesta primeira fase o catálogo e vários dados operacionais utilizem MOCK DATA.
+
+Não quero apenas uma landing page.
+
+Quero construir a base real de um **e-commerce premium B2C + plataforma B2B Trade**, focado inicialmente em:
+
+* azeites portugueses;
+* vinhos portugueses;
+* produtos gourmet;
+* boxes e presentes;
+* corporate gifting;
+* fornecimento profissional;
+* exportação;
+* private label;
+* produtores parceiros.
+
+A referência visual principal é a imagem/maquete que acompanha este pedido.
+
+Reproduz a linguagem visual, hierarquia, proporções, organização e atmosfera premium da maquete, melhorando onde tecnicamente necessário.
+
+---
+
+# 1. OBJETIVO
+
+Construir:
+
+**LIQUIDTHESIS**
+
+Posicionamento:
+
+> Portuguese Wine, Olive Oil & Fine Foods
+
+Com duas experiências comerciais dentro da mesma plataforma:
+
+### B2C
+
+**Para Si / Loja**
+
+Destinado a consumidores finais.
+
+### B2B
+
+**LiquidThesis Trade / Para Profissionais**
+
+Destinado a:
+
+* restaurantes;
+* hotéis;
+* garrafeiras;
+* lojas gourmet;
+* supermercados independentes;
+* distribuidores;
+* importadores;
+* catering;
+* empresas;
+* corporate gifting.
+
+A arquitetura deve permitir posteriormente ligar Supabase/PostgreSQL ou outra DB sem ser necessário reconstruir o frontend.
+
+---
+
+# 2. STACK
+
+Utilizar:
+
+* Next.js latest stable
+* App Router
+* TypeScript
+* React
+* Tailwind CSS
+* shadcn/ui quando fizer sentido
+* Lucide Icons
+* Stripe Node SDK
+* Stripe Checkout Sessions
+* Server Components por defeito
+* Client Components apenas quando necessário
+* Route Handlers para API
+* Vercel-ready
+* ESLint
+* código rigorosamente tipado
+
+Package manager:
+
+`npm`
+
+O projeto deve executar corretamente com:
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+O comando:
+
+```bash
+npm run build
+```
+
+TEM DE terminar sem erros TypeScript, ESLint ou build.
+
+---
+
+# 3. NÃO IMPLEMENTAR DB AINDA
+
+Nesta fase NÃO utilizar:
+
+* Supabase;
+* PostgreSQL;
+* Prisma;
+* Firebase;
+* MongoDB;
+* CMS externo.
+
+Criar uma camada MOCK limpa e substituível.
+
+Exemplo:
+
+```text
+src/
+  data/
+    products.ts
+    categories.ts
+    collections.ts
+    b2b.ts
+    club.ts
+    company.ts
+```
+
+Separar os dados da apresentação.
+
+Não colocar produtos diretamente dentro dos componentes React.
+
+Criar types/interfaces adequadas.
+
+Exemplo:
+
+```ts
+type Product = {
+  id: string
+  sku: string
+  slug: string
+  name: string
+  category: ProductCategory
+  description: string
+  shortDescription: string
+  price: number
+  currency: "EUR"
+  unitLabel?: string
+  unitPrice?: number
+  volume?: string
+  origin?: string
+  region?: string
+  images: string[]
+  featured: boolean
+  alcohol: boolean
+  ageRestricted: boolean
+  stockStatus: "in_stock" | "low_stock" | "out_of_stock"
+  b2b?: B2BPricing
+}
+```
+
+---
+
+# 4. DESIGN SYSTEM
+
+O visual deve transmitir:
+
+* Portugal premium;
+* tradição sem parecer antiquado;
+* produto artesanal;
+* confiança;
+* gastronomia;
+* vinho;
+* azeite;
+* exportação;
+* sofisticação.
+
+## Cores
+
+Base:
+
+Deep Olive:
+`#182515`
+
+Olive Secondary:
+`#273820`
+
+Wine Burgundy:
+`#5A1F27`
+
+Dark Burgundy:
+`#42161D`
+
+Warm Cream:
+`#F7F2E8`
+
+Soft Ivory:
+`#FCFAF5`
+
+Gold:
+`#B99042`
+
+Dark Text:
+`#1E211C`
+
+Muted:
+`#74766F`
+
+Não utilizar gradientes artificiais excessivos.
+
+O gold deve ser sofisticado e discreto.
+
+---
+
+# 5. TIPOGRAFIA
+
+Headings:
+
+usar uma serif editorial premium semelhante a:
+
+* Cormorant Garamond;
+* Playfair Display;
+* Libre Baskerville.
+
+UI/body:
+
+usar:
+
+* Inter;
+* Manrope;
+* ou Geist.
+
+Criar forte contraste editorial entre títulos e UI.
+
+---
+
+# 6. HEADER
+
+Criar duas barras.
+
+## Utility bar
+
+Fundo verde escuro.
+
+Esquerda:
+
+`Envios para Portugal | Entregas rápidas e seguras`
+
+Preparar estrutura futura para:
+
+`Portugal / EUR / PT`
+
+Direita:
+
+`Entrar`
+
+Botão:
+
+`Área Profissional`
+
+---
+
+## Main Header
+
+Logo textual premium:
+
+**LIQUIDTHESIS**
+
+Menu:
+
+* Loja
+* Azeites
+* Vinhos
+* Gourmet
+* Boxes
+* Trade
+* Produtores
+* Clube
+* Sobre
+* Contacto
+
+Ícones:
+
+* search
+* account
+* cart
+
+Carrinho com badge dinâmico.
+
+Header sticky elegante no scroll.
+
+---
+
+# 7. HOMEPAGE
+
+A homepage deve seguir muito de perto a maquete fornecida.
+
+## HERO
+
+Grande hero premium dividido visualmente entre azeite/vinha.
+
+Headline:
+
+# Azeites, Vinhos e Sabores de Portugal
+
+Subheadline:
+
+> Uma seleção portuguesa de azeites, vinhos e produtos gourmet para consumidores, restaurantes, hotéis, lojas especializadas e importadores.
+
+CTAs:
+
+**Explorar Loja**
+
+**Sou Profissional**
+
+Adicionar fotografia premium de:
+
+* oliveiras;
+* azeite;
+* garrafa;
+* azeitonas;
+* vinhas;
+* vinho;
+* adega.
+
+Não usar fotografia genérica de supermercado.
+
+---
+
+# 8. ESCOLHA B2C / B2B
+
+Logo abaixo do hero criar dois grandes cards.
+
+## Para Si
+
+Texto:
+
+> Descubra vinhos, azeites, produtos gourmet e boxes cuidadosamente selecionadas.
+
+CTA:
+
+**Comprar agora**
+
+Imagem lifestyle premium.
+
+---
+
+## Para Profissionais
+
+Texto:
+
+> Preços profissionais, fornecimento por caixa, pedidos por palete e soluções para restauração, hotelaria e distribuição.
+
+CTA:
+
+**Entrar no Trade**
+
+Imagem de caixas/paletes/armazém premium.
+
+---
+
+# 9. CATEGORIAS
+
+Criar:
+
+### Azeites
+
+### Vinhos
+
+### Gourmet
+
+### Boxes & Presentes
+
+### Corporate Gifts
+
+### Exportação
+
+### Private Label
+
+Cards premium com imagem.
+
+Filtros devem funcionar.
+
+---
+
+# 10. CATÁLOGO MOCK
+
+Criar um catálogo inicial demonstrativo.
+
+IMPORTANTE:
+
+Estes produtos são MOCK e deverão estar identificados internamente:
+
+```ts
+isMock: true
+```
+
+Nunca apresentar alegações legais, certificações DOP/IGP ou produtores reais que não tenham sido fornecidos.
+
+## AZEITES
+
+### LT Azeite Virgem Extra Reserva
+
+SKU:
+`LT-OIL-RES-500`
+
+Volume:
+500 ml
+
+Preço:
+€14,90
+
+Preço por litro:
+€29,80/L
+
+Categoria:
+Azeites
+
+Descrição:
+
+> Azeite virgem extra de perfil elegante e equilibrado, selecionado para acompanhar entradas, peixe, saladas e cozinha mediterrânica.
+
+---
+
+### LT Colheita Precoce
+
+SKU:
+`LT-OIL-EARLY-500`
+
+500 ml
+
+€17,90
+
+---
+
+### LT Seleção Biológica
+
+SKU:
+`LT-OIL-BIO-500`
+
+500 ml
+
+€16,50
+
+---
+
+### Pack Degustação de Azeites
+
+SKU:
+`LT-OIL-TASTING-4`
+
+4 × 100 ml
+
+€39,00
+
+---
+
+# 11. VINHOS
+
+### Douro Tinto Seleção
+
+SKU:
+`LT-WINE-DOURO-RED`
+
+750 ml
+
+€18,50
+
+18+
+
+---
+
+### Alentejo Reserva Tinto
+
+SKU:
+`LT-WINE-ALENTEJO-RES`
+
+750 ml
+
+€22,90
+
+18+
+
+---
+
+### Vinho Verde Branco Seleção
+
+SKU:
+`LT-WINE-VV-WHITE`
+
+750 ml
+
+€11,90
+
+18+
+
+---
+
+### Dão Branco Reserva
+
+SKU:
+`LT-WINE-DAO-WHITE`
+
+750 ml
+
+€16,90
+
+18+
+
+---
+
+### Espumante Bruto Seleção
+
+SKU:
+`LT-WINE-SPARKLING`
+
+750 ml
+
+€19,90
+
+18+
+
+Todos os produtos vínicos MOCK devem ter:
+
+```ts
+alcohol: true
+ageRestricted: true
+```
+
+---
+
+# 12. GOURMET
+
+### Conservas Artesanais Seleção
+
+SKU:
+`LT-GOURMET-CONSERVAS`
+
+€12,90
+
+---
+
+### Flor de Sal Premium
+
+SKU:
+`LT-GOURMET-SALT`
+
+€7,90
+
+---
+
+### Seleção Gourmet Portuguesa
+
+SKU:
+`LT-GOURMET-SELECTION`
+
+€24,90
+
+---
+
+# 13. BOXES
+
+### Box Descoberta de Portugal
+
+SKU:
+`LT-BOX-DISCOVERY`
+
+Preço:
+€59,00
+
+Conteúdo visual:
+
+* vinho;
+* azeite;
+* conservas;
+* produto gourmet.
+
+---
+
+### Box Azeite & Vinho
+
+SKU:
+`LT-BOX-OIL-WINE`
+
+€69,00
+
+18+
+
+---
+
+### Box Corporate Portugal
+
+SKU:
+`LT-BOX-CORPORATE`
+
+€89,00
+
+18+
+
+Adicionar opção:
+
+`Personalização empresarial disponível`
+
+---
+
+# 14. PRODUCT CARDS
+
+Cada card B2C deve mostrar:
+
+* fotografia;
+* categoria;
+* nome;
+* volume/peso;
+* preço;
+* preço por unidade de medida quando aplicável;
+* rating MOCK visual;
+* stock;
+* botão Adicionar;
+* wishlist visual;
+* badge 18+ quando necessário.
+
+Não criar reviews falsas textuais.
+
+Se usar stars de demonstração, não dizer que representam avaliações reais.
+
+---
+
+# 15. PRODUCT DETAIL
+
+Criar rota:
+
+```text
+/produto/[slug]
+```
+
+Página com:
+
+* gallery;
+* nome;
+* preço;
+* preço/unidade;
+* descrição;
+* características;
+* origem;
+* quantidade;
+* adicionar ao carrinho;
+* stock;
+* informação de entrega;
+* características alimentares;
+* informação adicional;
+* sugestões relacionadas.
+
+Criar estrutura preparada para futuramente ter:
+
+* ingredientes;
+* alergénios;
+* valor nutricional;
+* produtor;
+* lote;
+* EAN;
+* país de origem;
+* certificações;
+* ficha técnica;
+* ano/vindima;
+* castas;
+* teor alcoólico.
+
+Não inventar estes dados nesta fase.
+
+Onde não existirem:
+
+`Informação a confirmar`
+
+não deve aparecer na UI comercial.
+
+Simplesmente omitir.
+
+---
+
+# 16. AGE GATE
+
+Como o site comercializa vinho, implementar age gate elegante.
+
+Primeira visita:
+
+Modal:
+
+# Bem-vindo à LiquidThesis
+
+> Para aceder à nossa seleção de vinhos, confirme que tem 18 anos ou mais.
+
+Botões:
+
+**Tenho 18 anos ou mais**
+
+**Ainda não tenho 18 anos**
+
+Guardar confirmação em localStorage/cookie.
+
+Não tornar o modal agressivo.
+
+No footer:
+
+`Venda de bebidas alcoólicas proibida a menores de 18 anos.`
+
+Adicionar:
+
+`Beba com moderação.`
+
+Produtos sem álcool podem continuar visíveis estruturalmente, mas qualquer compra de vinho exige confirmação 18+.
+
+---
+
+# 17. LISTAGEM / LOJA
+
+Criar rota:
+
+`/loja`
+
+Filtros funcionais client-side:
+
+* Todos
+* Azeites
+* Vinhos
+* Gourmet
+* Boxes
+* Até €15
+* €15–€30
+* €30–€60
+* €60+
+
+Ordenação:
+
+* Destaques
+* Preço crescente
+* Preço decrescente
+* Nome
+
+Search funcional.
+
+---
+
+# 18. CARRINHO
+
+Implementar carrinho REAL client-side.
+
+Persistência:
+
+`localStorage`
+
+Criar CartProvider ou Zustand se realmente necessário.
+
+Funções:
+
+* adicionar;
+* remover;
+* alterar quantidade;
+* limpar;
+* subtotal;
+* shipping;
+* total;
+* contagem de itens.
+
+Drawer lateral ao clicar no ícone do carrinho.
+
+Criar também:
+
+`/carrinho`
+
+---
+
+# 19. SHIPPING MOCK
+
+Portugal Continental:
+
+### B2C
+
+Até €68,99:
+
+€4,90
+
+A partir de €69:
+
+GRÁTIS
+
+Criar função única server-side/client-safe para cálculo visual.
+
+Não duplicar regras arbitrariamente.
+
+Para MVP:
+
+### Carrinhos com vinho
+
+Checkout disponível inicialmente apenas para entrega em Portugal.
+
+### Carrinhos sem álcool
+
+Preparar tecnicamente países EU adicionais:
+
+* Portugal
+* Espanha
+* França
+* Alemanha
+* Bélgica
+* Países Baixos
+* Luxemburgo
+* Itália
+
+Mas colocar uma configuração central:
+
+```ts
+export const commerceConfig = {
+  wineShippingCountries: ["PT"],
+  foodShippingCountries: [
+    "PT",
+    "ES",
+    "FR",
+    "DE",
+    "BE",
+    "NL",
+    "LU",
+    "IT"
+  ]
+}
+```
+
+Isto deve ser facilmente alterável.
+
+---
+
+# 20. STRIPE — REQUISITO CRÍTICO
+
+Implementar Stripe corretamente.
+
+Na primeira fase:
+
+**STRIPE TEST MODE**
+
+Nunca colocar secret key no frontend.
+
+Nunca criar valores de pagamento com base no preço recebido diretamente do browser.
+
+O browser envia APENAS:
+
+```json
+{
+  "items": [
+    {
+      "sku": "LT-OIL-RES-500",
+      "quantity": 2
+    }
+  ],
+  "customerType": "B2C"
+}
+```
+
+O servidor:
+
+1. procura o SKU no catálogo server-side;
+2. confirma que existe;
+3. confirma preço;
+4. confirma quantidade;
+5. confirma disponibilidade;
+6. identifica se contém álcool;
+7. calcula shipping;
+8. cria os Stripe line_items;
+9. cria a Checkout Session.
+
+A autoridade do preço é SEMPRE server-side.
+
+---
+
+# 21. STRIPE CHECKOUT ROUTE
+
+Criar:
+
+```text
+POST /api/checkout
+```
+
+Utilizar:
+
+`stripe.checkout.sessions.create()`
+
+Com:
+
+```ts
+mode: "payment"
+```
+
+Criar line items server-side.
+
+Pode utilizar inicialmente:
+
+```ts
+price_data
+```
+
+com:
+
+* currency EUR;
+* product_data;
+* product name;
+* metadata SKU;
+* unit_amount.
+
+Não obrigar à criação manual de cada produto no Stripe nesta fase.
+
+Preparar arquitetura para posteriormente utilizar Stripe Price IDs.
+
+---
+
+# 22. CHECKOUT CONFIG
+
+Recolher:
+
+* email;
+* nome;
+* billing address;
+* shipping address;
+* telefone se suportado/configurado;
+* consentimentos necessários.
+
+Success URL:
+
+```text
+/checkout/sucesso?session_id={CHECKOUT_SESSION_ID}
+```
+
+Cancel URL:
+
+```text
+/carrinho?checkout=cancelled
+```
+
+Adicionar metadata:
+
+```text
+source = liquidthesis-web
+customer_type = B2C
+cart_reference = ...
+contains_alcohol = true|false
+```
+
+Não colocar dados sensíveis em metadata.
+
+---
+
+# 23. STRIPE SHIPPING
+
+Criar shipping option dinamicamente.
+
+Portugal:
+
+€4,90
+
+ou:
+
+€0,00 quando subtotal >= €69.
+
+Shipping deve ser recalculado no servidor.
+
+O browser não controla o preço final de shipping.
+
+---
+
+# 24. STRIPE WEBHOOK
+
+Criar:
+
+```text
+POST /api/stripe/webhook
+```
+
+Validar corretamente:
+
+`STRIPE_WEBHOOK_SECRET`
+
+Tratar inicialmente:
+
+```text
+checkout.session.completed
+checkout.session.async_payment_succeeded
+checkout.session.async_payment_failed
+payment_intent.payment_failed
+```
+
+Como ainda não existe DB:
+
+usar structured server logging.
+
+Exemplo:
+
+```ts
+console.info("stripe.checkout.completed", {
+  sessionId,
+  paymentStatus,
+  customerEmail,
+  amountTotal
+})
+```
+
+Não imprimir:
+
+* card data;
+* secrets;
+* client_secret;
+* dados sensíveis desnecessários.
+
+Preparar funções:
+
+```ts
+handleCheckoutCompleted()
+handlePaymentFailed()
+```
+
+para futura ligação a DB/order service.
+
+---
+
+# 25. SUCCESS PAGE
+
+Criar:
+
+`/checkout/sucesso`
+
+Não confiar apenas em query params.
+
+Consultar server-side a Checkout Session usando:
+
+`session_id`
+
+Mostrar:
+
+# Obrigado pela sua encomenda
+
+* referência;
+* email;
+* total;
+* estado do pagamento.
+
+CTA:
+
+`Continuar a comprar`
+
+Se Test Mode:
+
+mostrar badge discreto:
+
+`Pagamento de teste`
+
+---
+
+# 26. DEMO MODE / LIVE MODE
+
+Criar:
+
+```env
+NEXT_PUBLIC_COMMERCE_MODE=demo
+```
+
+Valores:
+
+```text
+demo
+live
+```
+
+Em demo:
+
+mostrar no topo ou footer discretamente:
+
+`Catálogo demonstrativo`
+
+ou:
+
+`Versão de demonstração`
+
+Stripe deve usar test keys.
+
+Nunca misturar test/live.
+
+---
+
+# 27. ENV VARIABLES
+
+Criar:
+
+`.env.example`
+
+com:
+
+```env
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_COMMERCE_MODE=demo
+
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+
+STRIPE_AUTOMATIC_TAX=false
+```
+
+Não commit de:
+
+`.env`
+`.env.local`
+
+Adicionar ao `.gitignore`.
+
+---
+
+# 28. STRIPE AUTOMATIC TAX
+
+Preparar suporte futuro.
+
+Por defeito:
+
+```env
+STRIPE_AUTOMATIC_TAX=false
+```
+
+Não ligar automaticamente sem configuração fiscal real.
+
+Os preços apresentados ao consumidor devem ser configurados como preços finais de demonstração.
+
+---
+
+# 29. B2B — LIQUIDTHESIS TRADE
+
+Criar:
+
+`/trade`
+
+Hero:
+
+# LiquidThesis Trade
+
+Subheadline:
+
+> Fornecimento de vinhos, azeites e produtos portugueses para restauração, hotelaria, retalho e distribuição.
+
+CTAs:
+
+**Criar Conta Profissional**
+
+**Pedir Cotação**
+
+---
+
+# 30. B2B BENEFITS
+
+Mostrar cards:
+
+### Preço por caixa
+
+Condições profissionais para compras recorrentes.
+
+### Cotação por palete
+
+Condições específicas para volumes maiores.
+
+### Exportação UE
+
+Preparação documental e logística.
+
+### Conta profissional
+
+Histórico, encomendas e faturação.
+
+### Corporate Gifts
+
+Volumes empresariais e personalização.
+
+### Private Label
+
+Projetos sob marca própria.
+
+---
+
+# 31. MOCK B2B PRICING
+
+Estruturar cada produto para poder ter:
+
+```ts
+b2b: {
+  unitsPerCase: 6,
+  casePrice: 79.90,
+  tierPrices: [
+    {
+      minCases: 1,
+      pricePerCase: 79.90
+    },
+    {
+      minCases: 5,
+      pricePerCase: 74.90
+    },
+    {
+      minCases: 10,
+      pricePerCase: 69.90
+    }
+  ],
+  palletQuote: true
+}
+```
+
+Estas condições são MOCK.
+
+Não vender ainda publicamente como condições comerciais reais.
+
+---
+
+# 32. ÁREA PROFISSIONAL MOCK
+
+Criar:
+
+`/trade/dashboard`
+
+Nesta fase NÃO implementar autenticação real.
+
+Criar um:
+
+`Demo Professional Account`
+
+Banner:
+
+`Modo demonstração`
+
+Dashboard com:
+
+* resumo;
+* catálogo profissional;
+* pedidos de cotação;
+* encomendas;
+* documentos;
+* condições comerciais;
+* conta da empresa.
+
+Usar MOCK DATA.
+
+Arquitetar para futura autenticação.
+
+---
+
+# 33. PEDIDO DE COTAÇÃO
+
+Criar:
+
+`/trade/cotacao`
+
+Form:
+
+* Empresa
+* NIF/VAT
+* Nome de contacto
+* Email
+* Telefone
+* País
+* Tipo de negócio
+* Produtos
+* Quantidade aproximada
+* Observações
+
+Como ainda não existe DB:
+
+o botão pode criar uma confirmação local MOCK.
+
+Mas estruturar:
+
+```ts
+submitQuoteRequest()
+```
+
+para futura API.
+
+Não fingir que enviou um pedido real se nenhum backend existir.
+
+Mensagem:
+
+`Pedido preparado em modo demonstração.`
+
+---
+
+# 34. PRODUTORES
+
+Criar página:
+
+`/produtores`
+
+Headline:
+
+# É produtor? Cresça connosco.
+
+Texto:
+
+> Procuramos produtores portugueses de azeite, vinho e produtos gourmet com capacidade para servir consumidores, restauração, retalho e mercados internacionais.
+
+CTA:
+
+`Tornar-se Parceiro`
+
+Form:
+
+* Empresa
+* NIF
+* Contacto
+* Email
+* Website
+* Região
+* Tipo de produto
+* Capacidade aproximada
+* Exporta atualmente?
+* Observações
+
+Modo demo nesta fase.
+
+---
+
+# 35. LIQUIDTHESIS CLUB
+
+Criar:
+
+`/clube`
+
+Três planos visuais.
+
+## Explorer
+
+€29/mês
+
+## Select
+
+€49/mês
+
+## Reserve
+
+€79/mês
+
+IMPORTANTE:
+
+São planos conceptuais/MOCK.
+
+Não criar recurring Stripe subscriptions ainda sem configuração de produtos reais.
+
+Os CTAs devem dizer:
+
+`Brevemente`
+
+ou:
+
+`Tenho interesse`
+
+Preparar componente para futura ligação Stripe Billing.
+
+---
+
+# 36. CORPORATE GIFTS
+
+Criar:
+
+`/corporate`
+
+Headline:
+
+# Presentes portugueses que representam a sua marca
+
+Para:
+
+* Natal;
+* eventos;
+* clientes;
+* colaboradores;
+* parceiros;
+* congressos;
+* hospitality.
+
+CTA:
+
+**Pedir proposta**
+
+Mostrar:
+
+* 25 unidades
+* 50 unidades
+* 100 unidades
+* 250+
+* embalagem personalizada
+* cartão
+* sleeve
+* branding empresarial
+
+Sem preços comerciais definitivos.
+
+---
+
+# 37. PRIVATE LABEL
+
+Criar:
+
+`/private-label`
+
+Headline:
+
+# A sua marca. A nossa seleção.
+
+Categorias:
+
+* azeite;
+* vinho;
+* boxes;
+* gourmet.
+
+Fluxo:
+
+1. Brief
+2. Seleção
+3. Amostras
+4. Branding
+5. Produção
+6. Entrega
+
+CTA:
+
+`Falar sobre um projeto`
+
+---
+
+# 38. EXPORTAÇÃO
+
+Criar:
+
+`/exportacao`
+
+Comunicar capacidade futura para servir mercados europeus.
+
+Não fazer afirmações falsas sobre presença atual.
+
+Usar:
+
+> Soluções preparadas para operações B2B nacionais e internacionais.
+
+e:
+
+> Contacte-nos para verificar disponibilidade, documentação e condições aplicáveis ao seu destino.
+
+---
+
+# 39. ABOUT
+
+Criar:
+
+`/sobre`
+
+Não inventar história empresarial, anos de experiência, número de clientes ou países.
+
+Posicionamento permitido:
+
+> A LiquidThesis nasce com o objetivo de aproximar produtores, empresas e consumidores através de uma seleção cuidada de azeites, vinhos e sabores portugueses.
+
+Comunicar:
+
+* curadoria;
+* origem;
+* qualidade;
+* relação com produtores;
+* comércio profissional;
+* tecnologia;
+* exportação.
+
+---
+
+# 40. DADOS INSTITUCIONAIS — EXATOS
+
+Estes dados devem ser utilizados SEM ALTERAÇÕES.
+
+## Firma
+
+**LIQUIDTHESIS, UNIPESSOAL LDA**
+
+## NIPC
+
+**519 440 390**
+
+Internamente pode permanecer:
+
+`519440390`
+
+## Natureza jurídica
+
+**Sociedade por Quotas**
+
+## Sede
+
+**Rua de São Nuno, 92**
+**2560-195 Soltaria**
+**São Pedro da Cadeira**
+**Torres Vedras, Lisboa**
+**Portugal**
+
+## Capital social
+
+**€20.000,00**
+
+## CAE Principal
+
+**46390-R4 — Comércio por grosso não especializado de produtos alimentares, bebidas e tabaco**
+
+## Gerência
+
+**Rui Jorge Alves Barata da Silva**
+
+Nunca publicar o NIF pessoal do gerente.
+
+---
+
+# 41. INFORMAÇÃO QUE NÃO DEVE SER PUBLICADA
+
+NÃO colocar no website:
+
+* código de acesso à Certidão Permanente;
+* NIF pessoal do gerente;
+* dados privados;
+* credenciais;
+* Stripe secrets;
+* qualquer chave API.
+
+O código de acesso da Certidão Permanente NÃO deve constar no repositório, frontend, `.env.example` ou documentação pública.
+
+---
+
+# 42. FOOTER LEGAL
+
+Quero um footer extremamente profissional.
+
+Estrutura:
+
+## Loja
+
+* Azeites
+* Vinhos
+* Gourmet
+* Boxes
+* Novidades
+
+## Trade
+
+* Área Profissional
+* Pedir Cotação
+* Exportação
+* Corporate Gifts
+* Private Label
+
+## Empresa
+
+* Sobre
+* Produtores
+* Contacto
+
+## Apoio
+
+* Perguntas Frequentes
+* Envios
+* Devoluções
+* Termos e Condições
+* Política de Privacidade
+* Política de Cookies
+
+## Legal
+
+* Livro de Reclamações
+* Resolução de Litígios
+
+Newsletter UI.
+
+Redes sociais apenas se existirem URLs reais.
+
+Não criar links fictícios para Instagram/Facebook/LinkedIn.
+
+---
+
+# 43. FOOTER CORPORATE LINE
+
+No final:
+
+**LIQUIDTHESIS, UNIPESSOAL LDA**
+
+`NIPC 519 440 390`
+
+`Rua de São Nuno, 92 · 2560-195 Soltaria · São Pedro da Cadeira · Torres Vedras · Portugal`
+
+`Capital social €20.000,00`
+
+Depois:
+
+`© {CURRENT_YEAR} LIQUIDTHESIS, UNIPESSOAL LDA. Todos os direitos reservados.`
+
+Ano SEMPRE dinâmico.
+
+Não usar 2024.
+
+---
+
+# 44. ÁLCOOL
+
+Mostrar no footer:
+
+`Venda de bebidas alcoólicas proibida a menores de 18 anos.`
+
+`Beba com moderação.`
+
+Evitar publicidade que:
+
+* associe álcool a sucesso;
+* incentive consumo excessivo;
+* seja dirigida a menores.
+
+---
+
+# 45. LIVRO DE RECLAMAÇÕES
+
+Adicionar link de destaque no footer:
+
+**Livro de Reclamações Eletrónico**
+
+Abrir em nova tab.
+
+Utilizar o portal oficial português.
+
+Não criar uma página falsa de reclamações.
+
+---
+
+# 46. RAL
+
+Criar página:
+
+`/resolucao-litigios`
+
+Indicar, para a sede em Torres Vedras:
+
+**CNIACC — Centro Nacional de Informação e Arbitragem de Conflitos de Consumo**
+
+Criar link para website oficial.
+
+Adicionar disclaimer:
+
+> Em caso de litígio de consumo, o consumidor pode recorrer a uma entidade de resolução alternativa de litígios de consumo legalmente competente.
+
+Não inventar adesão plena da LiquidThesis ao CNIACC caso isso não esteja confirmado.
+
+---
+
+# 47. CONTACTOS
+
+Criar:
+
+`/contacto`
+
+Como NÃO foram fornecidos:
+
+* email;
+* telefone;
+
+NÃO inventá-los.
+
+Criar formulário visual e centralizar os dados da empresa em:
+
+```ts
+company.ts
+```
+
+Permitir adicionar posteriormente:
+
+```ts
+email
+phone
+whatsapp
+instagram
+facebook
+linkedin
+```
+
+Se um valor estiver vazio:
+
+não renderizar.
+
+---
+
+# 48. TERMOS E CONDIÇÕES
+
+Criar uma estrutura profissional em:
+
+`/termos`
+
+Incluindo seções:
+
+* identificação do operador;
+* âmbito;
+* produtos;
+* preços;
+* encomendas;
+* pagamento;
+* entrega;
+* disponibilidade;
+* direito de livre resolução quando aplicável;
+* exceções quando legalmente aplicáveis;
+* devoluções;
+* reclamações;
+* propriedade intelectual;
+* proteção de dados;
+* responsabilidade;
+* legislação aplicável;
+* resolução de conflitos.
+
+Não apresentar o texto como parecer jurídico definitivo.
+
+Estruturar de modo a poder ser revisto por assessoria jurídica antes de LIVE.
+
+---
+
+# 49. PRIVACIDADE
+
+Criar:
+
+`/privacidade`
+
+RGPD-ready.
+
+Abranger:
+
+* dados recolhidos;
+* finalidade;
+* base jurídica;
+* pagamentos;
+* Stripe;
+* cookies;
+* analytics;
+* formulários;
+* conservação;
+* direitos do titular;
+* contacto.
+
+Como ainda não existe email de privacidade fornecido:
+
+não inventar.
+
+Utilizar indicação genérica:
+
+`através dos contactos oficiais disponibilizados neste website`
+
+até os dados serem fornecidos.
+
+---
+
+# 50. COOKIES
+
+Criar:
+
+`/cookies`
+
+e cookie consent UI.
+
+Categorias:
+
+* Necessários
+* Analytics
+* Marketing
+
+Por defeito:
+
+apenas necessários ativos.
+
+Não instalar Google Analytics, Meta Pixel ou outros trackers sem consentimento/configuração.
+
+---
+
+# 51. SEO
+
+Configurar metadata completa.
+
+Title homepage:
+
+`LiquidThesis | Azeites, Vinhos e Sabores de Portugal`
+
+Description:
+
+`Seleção portuguesa de azeites, vinhos, produtos gourmet e soluções B2B para restauração, hotelaria, retalho e distribuição.`
+
+Criar:
+
+* metadata;
+* OpenGraph;
+* sitemap;
+* robots.txt;
+* favicon placeholder premium;
+* canonical strategy;
+* Product JSON-LD onde aplicável;
+* Organization JSON-LD.
+
+Não inserir reviews/rating schema falsos.
+
+---
+
+# 52. URLS
+
+Criar pelo menos:
+
+```text
+/
+/loja
+/azeites
+/vinhos
+/gourmet
+/boxes
+/produto/[slug]
+
+/carrinho
+/checkout/sucesso
+
+/trade
+/trade/cotacao
+/trade/dashboard
+
+/produtores
+/clube
+/corporate
+/private-label
+/exportacao
+
+/sobre
+/contacto
+
+/termos
+/privacidade
+/cookies
+/envios
+/devolucoes
+/resolucao-litigios
+```
+
+---
+
+# 53. RESPONSIVE
+
+O site deve ficar perfeito em:
+
+* desktop 1440+
+* laptop
+* tablet
+* mobile 390 px
+
+Não simplesmente empilhar tudo.
+
+Criar mobile experience real:
+
+* menu drawer;
+* filtros mobile;
+* cart drawer;
+* sticky CTA quando fizer sentido;
+* touch targets corretos.
+
+---
+
+# 54. ACESSIBILIDADE
+
+Garantir:
+
+* semantic HTML;
+* labels;
+* alt text;
+* keyboard navigation;
+* visible focus;
+* aria onde necessário;
+* contraste adequado;
+* reduced motion quando aplicável.
+
+---
+
+# 55. PERFORMANCE
+
+O site deve ser muito rápido.
+
+Utilizar:
+
+* next/image;
+* responsive images;
+* lazy loading;
+* server components;
+* evitar dependências pesadas;
+* evitar animações desnecessárias;
+* otimizar fonts;
+* limitar client JS.
+
+Objetivo:
+
+Lighthouse elevado.
+
+---
+
+# 56. IMAGENS
+
+Utilizar imagens premium coerentes com:
+
+* olive groves;
+* Portuguese vineyards;
+* dark wine bottles;
+* olive oil bottles;
+* tasting tables;
+* premium gift boxes;
+* gourmet products;
+* wineries;
+* producers.
+
+Não usar logos ou embalagens de marcas reais sem autorização.
+
+Como o catálogo é MOCK, criar imagens genéricas e neutras.
+
+Não colocar certificações falsas nos rótulos.
+
+---
+
+# 57. MICROINTERAÇÕES
+
+Adicionar motion subtil:
+
+* hover cards;
+* menu;
+* cart;
+* CTA;
+* reveal leve;
+* product image hover;
+* transitions.
+
+Nada exagerado.
+
+Evitar aparência de template SaaS.
+
+O objetivo é:
+
+**premium Portuguese commerce.**
+
+---
+
+# 58. MOCK MODE VISUAL
+
+Quero que seja possível testar todo o fluxo.
+
+Homepage → Produto → Carrinho → Stripe Test Checkout → Success.
+
+Mas como os produtos ainda são MOCK:
+
+mostrar discretamente:
+
+`Catálogo demonstrativo`
+
+quando:
+
+```env
+NEXT_PUBLIC_COMMERCE_MODE=demo
+```
+
+Quando:
+
+```env
+NEXT_PUBLIC_COMMERCE_MODE=live
+```
+
+essa informação desaparece.
+
+---
+
+# 59. SECURITY
+
+Obrigatório:
+
+* sanitizar inputs;
+* validar payload APIs;
+* usar Zod;
+* server-side price authority;
+* Stripe webhook signature verification;
+* não expor secrets;
+* no `dangerouslySetInnerHTML` desnecessário;
+* não colocar tokens no repository;
+* não guardar cartão;
+* não manipular dados de cartão diretamente;
+* não logar secrets.
+
+---
+
+# 60. ERROR HANDLING
+
+Criar:
+
+* loading states;
+* empty cart;
+* 404;
+* checkout error;
+* product unavailable;
+* Stripe unavailable;
+* generic server error.
+
+Não mostrar stack traces ao cliente.
+
+---
+
+# 61. ARCHITECTURE FUTURE-PROOF
+
+Quero interfaces que permitam substituir:
+
+```text
+MockProductRepository
+```
+
+por:
+
+```text
+DatabaseProductRepository
+```
+
+posteriormente.
+
+O mesmo para:
+
+```text
+MockQuoteRepository
+MockCustomerRepository
+MockOrderRepository
+```
+
+Não é necessário overengineering.
+
+Mas não acoplar os componentes aos arrays MOCK.
+
+---
+
+# 62. README
+
+Criar README completo.
+
+Explicar:
+
+## Local
+
+```bash
+git clone ...
+npm install
+cp .env.example .env.local
+npm run dev
+```
+
+## Stripe
+
+Explicar onde colocar:
+
+```env
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+Explicar Test Mode.
+
+Explicar webhook local.
+
+Explicar que live keys NÃO devem ser commitadas.
+
+---
+
+# 63. VERCEL
+
+Projeto totalmente compatível com Vercel.
+
+Preparar deploy através de GitHub.
+
+Environment Variables necessárias:
+
+```text
+NEXT_PUBLIC_SITE_URL
+NEXT_PUBLIC_COMMERCE_MODE
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+STRIPE_SECRET_KEY
+STRIPE_WEBHOOK_SECRET
+STRIPE_AUTOMATIC_TAX
+```
+
+Não criar `vercel.json` se não for necessário.
+
+O projeto deve usar as convenções padrão de Next.js/Vercel.
+
+---
+
+# 64. GITHUB
+
+Preparar repository limpo.
+
+Adicionar:
+
+`.gitignore`
+
+README
+
+LICENSE apenas se for explicitamente decidido posteriormente.
+
+Não adicionar secrets.
+
+Commit inicial sugerido:
+
+```text
+feat: launch LiquidThesis commerce MVP
+```
+
+Não fazer commits gigantes sem estrutura.
+
+---
+
+# 65. DEPLOY FLOW
+
+Ao finalizar:
+
+1. executar lint;
+2. executar typecheck;
+3. executar production build;
+4. corrigir TODOS os erros;
+5. confirmar ausência de secrets;
+6. preparar Git;
+7. publicar/push para GitHub se o remote tiver sido fornecido;
+8. preparar/importar na Vercel;
+9. configurar Environment Variables;
+10. efetuar deploy;
+11. testar homepage;
+12. testar product page;
+13. testar cart;
+14. testar Stripe Test Checkout;
+15. testar success page;
+16. testar mobile.
+
+---
+
+# 66. NÃO FAZER
+
+Não:
+
+* inventar testemunhos;
+* inventar avaliações reais;
+* inventar clientes;
+* inventar produtores;
+* inventar prémios;
+* inventar certificações;
+* inventar números de vendas;
+* inventar número de países;
+* inventar contactos;
+* inventar emails;
+* inventar telefones;
+* inventar dados jurídicos;
+* publicar NIF pessoal do gerente;
+* publicar código da Certidão Permanente;
+* usar Stripe live automaticamente;
+* usar dados de cartão diretamente;
+* criar checkout fake;
+* criar páginas sem funcionamento;
+* encher o site de lorem ipsum.
+
+---
+
+# 67. CRITÉRIO VISUAL FINAL
+
+O resultado deve parecer uma empresa que poderia estar a operar hoje a nível europeu.
+
+Não quero aparência de:
+
+* template genérico;
+* projeto escolar;
+* landing page de IA;
+* dropshipping;
+* supermercado discount.
+
+Quero aparência comparável a:
+
+**luxury food commerce + premium wine merchant + modern B2B sourcing platform.**
+
+A experiência B2C deve ser emocional.
+
+A experiência B2B deve ser racional e profissional.
+
+---
+
+# 68. HOMEPAGE — ORDEM EXATA
+
+1. Utility header
+2. Main navigation
+3. Hero
+4. Para Si / Para Profissionais
+5. Categorias
+6. Produtos em Destaque
+7. Storytelling / Portugal
+8. LiquidThesis Trade
+9. Boxes / Corporate
+10. LiquidThesis Club
+11. Produtores
+12. Newsletter
+13. Footer institucional/legal
+
+---
+
+# 69. PRODUTOS DESTAQUE HOMEPAGE
+
+Mostrar:
+
+**LT Azeite Virgem Extra Reserva**
+€14,90
+
+**Douro Tinto Seleção**
+€18,50
+
+**Box Descoberta de Portugal**
+€59,00
+
+**Pack Degustação de Azeites**
+€39,00
+
+---
+
+# 70. COPY PRINCIPAL
+
+Hero:
+
+# Azeites, Vinhos e Sabores de Portugal
+
+> Uma seleção portuguesa criada para descobrir, oferecer e partilhar.
+
+B2C:
+
+# Para Si
+
+> Descubra uma seleção de vinhos, azeites e sabores portugueses.
+
+B2B:
+
+# Para Profissionais
+
+> Fornecimento profissional para restauração, hotelaria, retalho e distribuição.
+
+Trade:
+
+# LiquidThesis Trade
+
+> Portugal na sua carta, prateleira ou negócio.
+
+Produtores:
+
+# É produtor?
+
+> Leve os seus produtos mais longe connosco.
+
+---
+
+# 71. FINAL DELIVERY
+
+No final do trabalho quero receber um relatório objetivo:
+
+```text
+LIQUIDTHESIS MVP
+Status:
+Build:
+Lint:
+Stripe:
+Webhook:
+Responsive:
+Git:
+Vercel:
+
+Implemented:
+- ...
+- ...
+- ...
+
+Environment variables required:
+- ...
+
+Pending before LIVE:
+- real products
+- real stock
+- final shipping policy
+- final tax configuration
+- live Stripe approval/configuration
+- legal review
+- email/contact
+- analytics consent setup
+
+Routes:
+- ...
+
+Test instructions:
+- ...
+```
+
+Não declarar o projeto concluído se:
+
+`npm run build`
+
+falhar.
+
+---
+
+# 72. PRIORIDADE DE EXECUÇÃO
+
+Prioridade absoluta:
+
+**1. Arquitetura correta**
+
+**2. Fidelidade visual à maquete**
+
+**3. Homepage**
+
+**4. Catálogo**
+
+**5. Product pages**
+
+**6. Cart**
+
+**7. Stripe Test Checkout**
+
+**8. B2B Trade**
+
+**9. Legal/Footer**
+
+**10. Responsive**
+
+**11. SEO**
+
+**12. Vercel**
+
+Implementa diretamente.
+
+Não pares apenas para propor arquitetura.
+
+Não devolvas apenas snippets.
+
+Cria o projeto completo, ficheiro por ficheiro, testa-o e deixa-o preparado para GitHub + Vercel.

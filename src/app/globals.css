@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-heading);
+  --font-mono: var(--font-geist-mono);
+  --color-olive: #182515;
+  --color-olive-secondary: #273820;
+  --color-olive-light: #3a5232;
+  --color-burgundy: #5A1F27;
+  --color-burgundy-dark: #42161D;
+  --color-cream: #F7F2E8;
+  --color-ivory: #FCFAF5;
+  --color-gold: #B99042;
+  --color-gold-light: #D4AF6A;
+  --color-gold-dark: #96732E;
+  --color-dark: #1E211C;
+  --color-muted: #74766F;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: #FCFAF5;
+  --foreground: #1E211C;
+  --card: #FFFFFF;
+  --card-foreground: #1E211C;
+  --popover: #FFFFFF;
+  --popover-foreground: #1E211C;
+  --primary: #182515;
+  --primary-foreground: #F7F2E8;
+  --secondary: #F7F2E8;
+  --secondary-foreground: #1E211C;
+  --muted: #F7F2E8;
+  --muted-foreground: #74766F;
+  --accent: #B99042;
+  --accent-foreground: #1E211C;
+  --destructive: #dc2626;
+  --border: #E5E0D5;
+  --input: #E5E0D5;
+  --ring: #B99042;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F2E8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4B99A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B99042;
+}
+
+/* ─── Base Styles ──────────────────────────────── */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-ivory text-dark;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), Georgia, serif;
+  }
+}
+
+/* ─── Animations ───────────────────────────────── */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out both;
+}
+
+/* Stagger delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* ─── Premium Card Hover ───────────────────────── */
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(24, 37, 21, 0.12);
+}
+
+/* ─── Gold Button Shine ────────────────────────── */
+
+.btn-gold {
+  background: linear-gradient(135deg, #B99042 0%, #D4AF6A 50%, #B99042 100%);
+  background-size: 200% 200%;
+  transition: all 0.3s ease;
+}
+.btn-gold:hover {
+  background-position: 100% 100%;
+  box-shadow: 0 4px 16px rgba(185, 144, 66, 0.35);
+}
+
+/* ─── Image Overlay Gradient ───────────────────── */
+
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(24, 37, 21, 0.3) 0%,
+    rgba(24, 37, 21, 0.6) 60%,
+    rgba(24, 37, 21, 0.85) 100%
+  );
+}
+
+/* ─── Section Divider ──────────────────────────── */
+
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: #B99042;
+  margin: 0 auto;
+}
+
+/* ─── Product Image Zoom on Hover ──────────────── */
+
+.product-image-zoom {
+  overflow: hidden;
+}
+.product-image-zoom img {
+  transition: transform 0.5s ease;
+}
+.product-image-zoom:hover img {
+  transform: scale(1.05);
+}
