@@ -6,6 +6,7 @@ import {
   Gift,
   Tag,
 } from 'lucide-react'
+import Link from 'next/link'
 import { tradeBenefits } from '@/data/b2b'
 
 type LucideIcon = React.ElementType
@@ -44,9 +45,12 @@ export default function TradeSection() {
         </div>
 
         <div className="text-center mt-8 sm:mt-10">
-          <button className="bg-gold text-dark font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md hover:bg-gold-light transition-colors text-sm sm:text-base">
+          <Link
+            href="/trade/cotacao"
+            className="bg-gold text-dark font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md hover:bg-gold-light transition-colors text-sm sm:text-base"
+          >
             Pedir Cotação
-          </button>
+          </Link>
         </div>
       </div>
     </section>

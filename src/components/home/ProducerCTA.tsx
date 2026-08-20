@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 export function ProducerCTA() {
@@ -21,13 +22,13 @@ export function ProducerCTA() {
         <p className="text-cream/80 text-sm sm:text-base md:text-lg mt-3 sm:mt-4 max-w-2xl mx-auto leading-relaxed">
           Venda connosco para clientes em Portugal e na Europa.
         </p>
-        <a
-          href="#produtores"
+        <Link
+          href="/contacto"
           className="inline-flex items-center gap-2 btn-gold text-dark font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md mt-6 sm:mt-8 hover:gap-3 transition-all text-sm sm:text-base"
         >
           Tornar-se Parceiro
           <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </a>
+        </Link>
       </div>
     </section>
   )

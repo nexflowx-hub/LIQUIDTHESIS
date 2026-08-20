@@ -13,16 +13,16 @@ interface MobileMenuProps {
 }
 
 const NAV_LINKS = [
-  { label: 'Loja', href: '#' },
-  { label: 'Azeites', href: '#' },
-  { label: 'Vinhos', href: '#' },
-  { label: 'Gourmet', href: '#' },
-  { label: 'Boxes', href: '#' },
-  { label: 'Trade', href: '#' },
-  { label: 'Produtores', href: '#' },
+  { label: 'Loja', href: '/loja' },
+  { label: 'Azeites', href: '/azeites' },
+  { label: 'Vinhos', href: '/vinhos' },
+  { label: 'Gourmet', href: '/gourmet' },
+  { label: 'Boxes', href: '/boxes' },
+  { label: 'Trade', href: '/trade' },
+  { label: 'Produtores', href: '/produtores' },
   { label: 'Clube', href: '#' },
-  { label: 'Sobre', href: '#' },
-  { label: 'Contacto', href: '#' },
+  { label: 'Sobre', href: '/sobre' },
+  { label: 'Contacto', href: '/contacto' },
 ] as const
 
 export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {

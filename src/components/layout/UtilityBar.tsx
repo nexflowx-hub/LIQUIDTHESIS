@@ -25,19 +25,19 @@ export function UtilityBar() {
         {/* Right: Auth actions */}
         <div className="flex items-center gap-2 sm:gap-3">
           <a
-            href="#"
+            href="/trade"
             className="hidden text-xs text-cream/70 transition-colors hover:text-cream md:block"
           >
             Entrar
           </a>
-          <button
-            type="button"
+          <a
+            href="/trade"
             className="inline-flex items-center gap-1 bg-gold px-2.5 py-1 text-[10px] sm:px-3 sm:py-1 sm:text-xs font-medium text-dark rounded-sm transition-colors hover:bg-gold-light"
           >
             <User className="size-2.5 sm:size-3" />
             <span className="hidden xs:inline">Área Profissional</span>
             <span className="xs:hidden">Trade</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>

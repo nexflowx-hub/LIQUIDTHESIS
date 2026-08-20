@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Playfair_Display, Inter } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
+import { ClientShell } from "@/components/layout/ClientShell"
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
@@ -183,7 +184,9 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${inter.variable} antialiased bg-ivory text-dark`}
       >
-        {children}
+        <div className="min-h-screen flex flex-col">
+          <ClientShell>{children}</ClientShell>
+        </div>
         <Toaster />
       </body>
     </html>

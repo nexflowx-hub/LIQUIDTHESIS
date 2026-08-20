@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { ShoppingBag, Building2 } from 'lucide-react'
+import Link from 'next/link'
 
 export default function B2CB2BCards() {
   return (
@@ -24,9 +25,9 @@ export default function B2CB2BCards() {
               Descubra vinhos, azeites, produtos gourmet e boxes cuidadosamente
               selecionadas.
             </p>
-            <button className="bg-gold text-dark font-medium px-4 sm:px-5 py-2 rounded hover:bg-gold-light mt-3 sm:mt-4 self-start transition-colors text-sm">
+            <Link href="/loja" className="bg-gold text-dark font-medium px-4 sm:px-5 py-2 rounded hover:bg-gold-light mt-3 sm:mt-4 self-start transition-colors text-sm">
               Comprar Agora
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -47,9 +48,9 @@ export default function B2CB2BCards() {
               Preços profissionais, fornecimento por caixa, pedidos por palete e
               soluções para restauração, hotelaria e distribuição.
             </p>
-            <button className="bg-gold text-dark font-medium px-4 sm:px-5 py-2 rounded hover:bg-gold-light mt-3 sm:mt-4 self-start transition-colors text-sm">
+            <Link href="/trade" className="bg-gold text-dark font-medium px-4 sm:px-5 py-2 rounded hover:bg-gold-light mt-3 sm:mt-4 self-start transition-colors text-sm">
               Entrar no Trade
-            </button>
+            </Link>
           </div>
         </div>
       </div>

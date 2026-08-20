@@ -65,3 +65,6 @@ skills/
 
 # Z scripts
 .zscripts/
+
+# Agent context
+agent-ctx/

@@ -1,36 +1,47 @@
 import { Wheat } from 'lucide-react'
 import { company } from '@/data/company'
 import { Input } from '@/components/ui/input'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const FOOTER_SHOP = [
-  { label: 'Azeites', href: '#' },
-  { label: 'Vinhos', href: '#' },
-  { label: 'Gourmet', href: '#' },
-  { label: 'Boxes', href: '#' },
-  { label: 'Novidades', href: '#' },
+  { label: 'Azeites', href: '/azeites' },
+  { label: 'Vinhos', href: '/vinhos' },
+  { label: 'Gourmet', href: '/gourmet' },
+  { label: 'Boxes', href: '/boxes' },
+  { label: 'Novidades', href: '/novidades' },
 ]
 
 const FOOTER_TRADE = [
-  { label: 'Área Profissional', href: '#' },
-  { label: 'Pedir Cotação', href: '#' },
-  { label: 'Exportação', href: '#' },
-  { label: 'Corporate Gifts', href: '#' },
-  { label: 'Private Label', href: '#' },
+  { label: 'Área Profissional', href: '/trade' },
+  { label: 'Pedir Cotação', href: '/trade/cotacao' },
+  { label: 'Exportação', href: '/trade/exportacao' },
+  { label: 'Corporate Gifts', href: '/trade/corporate-gifts' },
+  { label: 'Private Label', href: '/trade/private-label' },
 ]
 
 const FOOTER_COMPANY = [
-  { label: 'Sobre', href: '#' },
-  { label: 'Produtores', href: '#' },
-  { label: 'Contacto', href: '#' },
+  { label: 'Sobre', href: '/sobre' },
+  { label: 'Produtores', href: '/produtores' },
+  { label: 'Contacto', href: '/contacto' },
 ]
 
 const FOOTER_SUPPORT = [
-  { label: 'Perguntas Frequentes', href: '#' },
-  { label: 'Envios', href: '#' },
-  { label: 'Devoluções', href: '#' },
-  { label: 'Termos e Condições', href: '#' },
-  { label: 'Política de Privacidade', href: '#' },
-  { label: 'Política de Cookies', href: '#' },
+  { label: 'Perguntas Frequentes', href: '/faq' },
+  { label: 'Envios', href: '/envios' },
+  { label: 'Devoluções', href: '/devolucoes' },
+  { label: 'Termos e Condições', href: '/termos' },
+  { label: 'Política de Privacidade', href: '/privacidade' },
+  { label: 'Política de Cookies', href: '/cookies' },
+]
+
+const PAYMENT_ICONS = [
+  { src: '/images/payment/visa.svg', alt: 'Visa', width: 40, height: 26 },
+  { src: '/images/payment/mastercard.svg', alt: 'MasterCard', width: 40, height: 26 },
+  { src: '/images/payment/apple-pay.svg', alt: 'Apple Pay', width: 40, height: 26 },
+  { src: '/images/payment/mbway.svg', alt: 'MB WAY', width: 52, height: 26 },
+  { src: '/images/payment/bizum.svg', alt: 'Bizum', width: 52, height: 26 },
+  { src: '/images/payment/pix.svg', alt: 'Pix', width: 26, height: 26 },
 ]
 
 function FooterColumn({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
@@ -42,12 +53,12 @@ function FooterColumn({ title, links }: { title: string; links: readonly { label
       <ul className="space-y-1.5 sm:space-y-2.5">
         {links.map((link) => (
           <li key={link.label}>
-            <a
+            <Link
               href={link.href}
               className="text-xs sm:text-sm text-cream/60 transition-colors hover:text-cream"
             >
               {link.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -94,8 +105,26 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Payment methods */}
+        <div className="mt-6 sm:mt-8 border-t border-cream/10 pt-5 sm:pt-6">
+          <p className="text-[10px] sm:text-xs text-cream/40 uppercase tracking-wider mb-3">Meios de Pagamento</p>
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            {PAYMENT_ICONS.map((icon) => (
+              <Image
+                key={icon.alt}
+                src={icon.src}
+                alt={icon.alt}
+                width={icon.width}
+                height={icon.height}
+                className="opacity-60 hover:opacity-100 transition-opacity"
+                style={{ height: '22px', width: 'auto' }}
+              />
+            ))}
+          </div>
+        </div>
+
         {/* Company info section */}
-        <div className="mt-6 sm:mt-10 space-y-2 sm:space-y-3 border-t border-cream/10 pt-6 sm:pt-8">
+        <div className="mt-5 sm:mt-6 space-y-2 sm:space-y-3 border-t border-cream/10 pt-5 sm:pt-6">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] sm:text-xs text-cream/50">
             <span className="font-medium text-cream/70">{company.name}</span>
             <span>·</span>
@@ -158,19 +187,19 @@ export function Footer() {
 
           {/* Right: Legal links */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <a
-              href="#"
+            <Link
+              href="/termos"
               className="transition-colors hover:text-cream/70"
             >
               Termos &amp; Condições
-            </a>
+            </Link>
             <span>|</span>
-            <a
-              href="#"
+            <Link
+              href="/privacidade"
               className="transition-colors hover:text-cream/70"
             >
               Política de Privacidade
-            </a>
+            </Link>
           </div>
         </div>
       </div>

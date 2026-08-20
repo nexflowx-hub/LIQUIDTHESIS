@@ -11,16 +11,16 @@ interface HeaderProps {
 }
 
 const NAV_LINKS = [
-  { label: 'Loja', href: '#' },
-  { label: 'Azeites', href: '#' },
-  { label: 'Vinhos', href: '#' },
-  { label: 'Gourmet', href: '#' },
-  { label: 'Boxes', href: '#' },
-  { label: 'Trade', href: '#' },
-  { label: 'Produtores', href: '#' },
+  { label: 'Loja', href: '/loja' },
+  { label: 'Azeites', href: '/azeites' },
+  { label: 'Vinhos', href: '/vinhos' },
+  { label: 'Gourmet', href: '/gourmet' },
+  { label: 'Boxes', href: '/boxes' },
+  { label: 'Trade', href: '/trade' },
+  { label: 'Produtores', href: '/produtores' },
   { label: 'Clube', href: '#' },
-  { label: 'Sobre', href: '#' },
-  { label: 'Contacto', href: '#' },
+  { label: 'Sobre', href: '/sobre' },
+  { label: 'Contacto', href: '/contacto' },
 ] as const
 
 export function Header({ onOpenCart, onOpenMobileMenu }: HeaderProps) {
@@ -44,7 +44,7 @@ export function Header({ onOpenCart, onOpenMobileMenu }: HeaderProps) {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-4 sm:py-4">
         {/* Left: Logo */}
-        <a href="#" className="shrink-0 flex items-center gap-2">
+        <a href="/" className="shrink-0 flex items-center gap-2">
           <Image
             src="/logo.svg"
             alt="LiquidThesis"

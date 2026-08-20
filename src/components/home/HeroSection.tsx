@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { COMMERCE_MODE } from '@/data/commerce'
 import { Badge } from '@/components/ui/badge'
 
@@ -41,12 +42,12 @@ export default function HeroSection({ onOpenCart: _onOpenCart }: HeroSectionProp
           consumidores, restaurantes, hotéis, lojas gourmet e importadores.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-xs sm:max-w-none">
-          <button className="btn-gold text-dark font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-sm sm:text-base">
+          <Link href="/loja" className="btn-gold text-dark font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-sm sm:text-base text-center">
             Explorar Loja
-          </button>
-          <button className="bg-burgundy text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md hover:bg-burgundy-dark transition-colors text-sm sm:text-base">
+          </Link>
+          <Link href="/trade" className="bg-burgundy text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-md hover:bg-burgundy-dark transition-colors text-sm sm:text-base text-center">
             Sou Profissional
-          </button>
+          </Link>
         </div>
       </div>
     </section>
