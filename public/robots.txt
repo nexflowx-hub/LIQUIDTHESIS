@@ -6,9 +6,14 @@ Allow: /
 
 User-agent: Twitterbot
 Allow: /
+Allow: /images/
 
 User-agent: facebookexternalhit
 Allow: /
+Allow: /images/
 
 User-agent: *
 Allow: /
+Disallow: /api/
+
+Sitemap: https://liquidthesis.pt/sitemap.xml

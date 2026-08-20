@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Heart, Star, Droplets, Wine, Package } from 'lucide-react'
+import { Heart, Star, Droplets, Wine, Package, ShoppingCart } from 'lucide-react'
 import type { Product } from '@/data/types'
 import { useCartStore } from '@/store/cart'
 
@@ -26,9 +26,12 @@ export default function ProductCard({ product, onOpenCart }: ProductCardProps) {
 
   const PlaceholderIcon = placeholderIcons[product.category] ?? Package
   const [imgError, setImgError] = useState(false)
+  const [added, setAdded] = useState(false)
 
   function handleAdd() {
     addItem(product)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1200)
     onOpenCart?.()
   }
 
@@ -48,58 +51,59 @@ export default function ProductCard({ product, onOpenCart }: ProductCardProps) {
             alt={product.name}
             fill
             className="object-cover"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
             onError={() => setImgError(true)}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <PlaceholderIcon className="text-muted/40" size={48} strokeWidth={1.2} />
+            <PlaceholderIcon className="text-muted/40" size={40} strokeWidth={1.2} />
           </div>
         )}
 
         {/* Age restricted badge */}
         {product.ageRestricted && (
-          <span className="absolute top-2 left-2 bg-burgundy text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+          <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 bg-burgundy text-white text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded">
             18+
           </span>
         )}
 
         {/* Wishlist button */}
         <button
-          className="absolute top-2 right-2 text-muted hover:text-burgundy transition-colors"
+          className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-muted/60 hover:text-burgundy transition-colors p-1 bg-white/80 rounded-full"
           aria-label="Adicionar aos favoritos"
         >
-          <Heart size={18} />
+          <Heart size={14} className="sm:w-[18px] sm:h-[18px]" />
         </button>
       </div>
 
       {/* Info area */}
-      <div className="p-4">
-        <p className="uppercase text-[11px] text-muted tracking-wider font-medium">
+      <div className="p-2.5 sm:p-4">
+        <p className="uppercase text-[10px] sm:text-[11px] text-muted tracking-wider font-medium">
           {product.category}
         </p>
-        <h3 className="font-medium text-sm text-dark line-clamp-2 mt-1">
+        <h3 className="font-medium text-xs sm:text-sm text-dark line-clamp-2 mt-0.5 sm:mt-1 leading-snug">
           {product.name}
         </h3>
         {(product.volume || product.unitLabel) && (
-          <p className="text-xs text-muted mt-0.5">
+          <p className="text-[10px] sm:text-xs text-muted mt-0.5">
             {product.volume ?? product.unitLabel}
           </p>
         )}
 
         {/* Price */}
-        <div className="mt-2 flex items-baseline gap-1">
-          <span className="font-semibold text-lg text-dark">
+        <div className="mt-1.5 sm:mt-2 flex items-baseline gap-1">
+          <span className="font-semibold text-base sm:text-lg text-dark">
             {formatPrice(product.price)}
           </span>
           {product.unitPrice && unitSuffix && (
-            <span className="text-xs text-muted font-normal">
+            <span className="text-[10px] sm:text-xs text-muted font-normal">
               {formatPrice(product.unitPrice)}{unitSuffix}
             </span>
           )}
         </div>
 
-        {/* Rating - visual only */}
-        <div className="flex gap-0.5 mt-2">
+        {/* Rating - visual only — hidden on mobile for cleaner look */}
+        <div className="hidden sm:flex gap-0.5 mt-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
@@ -109,8 +113,8 @@ export default function ProductCard({ product, onOpenCart }: ProductCardProps) {
           ))}
         </div>
 
-        {/* Stock */}
-        <div className="flex items-center gap-1.5 mt-2">
+        {/* Stock — hidden on very small screens */}
+        <div className="hidden sm:flex items-center gap-1.5 mt-1.5">
           <span
             className={`inline-block w-1.5 h-1.5 rounded-full ${
               product.stockStatus === 'in_stock'
@@ -131,10 +135,24 @@ export default function ProductCard({ product, onOpenCart }: ProductCardProps) {
 
         {/* Add to cart button */}
         <button
-          className="w-full border border-border text-dark text-sm font-medium py-2 rounded hover:bg-dark hover:text-cream transition-colors mt-3"
+          className={`w-full flex items-center justify-center gap-1.5 border text-dark text-xs sm:text-sm font-medium py-1.5 sm:py-2 rounded mt-2 sm:mt-3 transition-all ${
+            added
+              ? 'border-green-500 bg-green-50 text-green-700'
+              : 'border-border hover:bg-dark hover:text-cream'
+          }`}
           onClick={handleAdd}
         >
-          Adicionar
+          {added ? (
+            <>
+              <span className="text-green-600">✓</span>
+              Adicionado
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="size-3 sm:size-3.5" />
+              Adicionar
+            </>
+          )}
         </button>
       </div>
     </div>

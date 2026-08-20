@@ -36,15 +36,15 @@ const FOOTER_SUPPORT = [
 function FooterColumn({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
   return (
     <div>
-      <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-cream">
+      <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-cream">
         {title}
       </h3>
-      <ul className="space-y-2.5">
+      <ul className="space-y-1.5 sm:space-y-2.5">
         {links.map((link) => (
           <li key={link.label}>
             <a
               href={link.href}
-              className="text-sm text-cream/60 transition-colors hover:text-cream"
+              className="text-xs sm:text-sm text-cream/60 transition-colors hover:text-cream"
             >
               {link.label}
             </a>
@@ -61,19 +61,19 @@ export function Footer() {
   return (
     <footer className="bg-olive text-cream">
       {/* Main footer grid */}
-      <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
+      <div className="mx-auto max-w-7xl px-3 sm:px-4 py-8 sm:py-12">
+        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-5">
           <FooterColumn title="Loja" links={FOOTER_SHOP} />
           <FooterColumn title="Trade" links={FOOTER_TRADE} />
           <FooterColumn title="Empresa" links={FOOTER_COMPANY} />
           <FooterColumn title="Apoio" links={FOOTER_SUPPORT} />
 
           {/* Newsletter column */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-cream">
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-cream">
               Newsletter
             </h3>
-            <p className="mb-4 text-sm leading-relaxed text-cream/60">
+            <p className="mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed text-cream/60">
               Receba novidades, promoções exclusivas e informações sobre novos
               produtos diretamente no seu email.
             </p>
@@ -81,12 +81,12 @@ export function Footer() {
               <Input
                 type="email"
                 placeholder="O seu email"
-                className="border-cream/20 bg-olive-secondary text-cream placeholder:text-cream/40 focus-visible:border-gold focus-visible:ring-gold/30"
+                className="border-cream/20 bg-olive-secondary text-cream placeholder:text-cream/40 focus-visible:border-gold focus-visible:ring-gold/30 text-xs sm:text-sm"
                 aria-label="Email para newsletter"
               />
               <button
                 type="button"
-                className="bg-gold px-4 py-2 text-sm font-medium text-dark transition-colors hover:bg-gold-light rounded-sm whitespace-nowrap"
+                className="bg-gold px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-dark transition-colors hover:bg-gold-light rounded-sm whitespace-nowrap"
               >
                 Subscrever
               </button>
@@ -95,32 +95,32 @@ export function Footer() {
         </div>
 
         {/* Company info section */}
-        <div className="mt-10 space-y-3 border-t border-cream/10 pt-8">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-cream/50">
+        <div className="mt-6 sm:mt-10 space-y-2 sm:space-y-3 border-t border-cream/10 pt-6 sm:pt-8">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] sm:text-xs text-cream/50">
             <span className="font-medium text-cream/70">{company.name}</span>
             <span>·</span>
             <span>NIPC {company.nipc}</span>
             <span>·</span>
             <span>Capital Social: €{company.capital}</span>
           </div>
-          <p className="text-xs text-cream/50">{company.fullAddress}</p>
-          <p className="text-xs text-cream/50">
+          <p className="text-[10px] sm:text-xs text-cream/50">{company.fullAddress}</p>
+          <p className="text-[10px] sm:text-xs text-cream/50">
             CAE: {company.cae} — {company.caeDescription}
           </p>
         </div>
 
         {/* Alcohol warnings */}
-        <div className="mt-6 space-y-1">
-          <p className="text-[11px] text-cream/40">
+        <div className="mt-4 sm:mt-6 space-y-0.5 sm:space-y-1">
+          <p className="text-[10px] sm:text-[11px] text-cream/40">
             {company.legal.alcoholWarning}
           </p>
-          <p className="text-[11px] text-cream/40">
+          <p className="text-[10px] sm:text-[11px] text-cream/40">
             {company.legal.drinkResponsibly}
           </p>
         </div>
 
         {/* RAL disclaimer */}
-        <p className="mt-3 text-[11px] text-cream/40">
+        <p className="mt-2 sm:mt-3 text-[10px] sm:text-[11px] text-cream/40">
           {company.legal.ralDisclaimer}{' '}
           <a
             href={company.legal.ralUrl}
@@ -144,10 +144,10 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-cream/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 py-4 text-xs text-cream/50 sm:flex-row sm:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-3 sm:px-4 py-3 sm:py-4 text-[10px] sm:text-xs text-cream/50 sm:flex-row sm:justify-between">
           {/* Left: Tagline */}
-          <div className="flex items-center gap-2">
-            <Wheat className="size-3.5" />
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <Wheat className="size-3 sm:size-3.5" />
             <span>{company.tagline}</span>
           </div>
 
@@ -157,7 +157,7 @@ export function Footer() {
           </span>
 
           {/* Right: Legal links */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <a
               href="#"
               className="transition-colors hover:text-cream/70"
